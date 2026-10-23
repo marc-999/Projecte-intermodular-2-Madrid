@@ -12,5 +12,3 @@
   * [Assoliments completats i resultats obtinguts]
 * **d. Què NO s'ha pogut aconseguir i per què:**
   * [Tasques pendents, bloquejos, errades tècniques o falta de temps]
-
-> *Nota: Es poden incloure imatges, captures de pantalla o taules explicatives.*
