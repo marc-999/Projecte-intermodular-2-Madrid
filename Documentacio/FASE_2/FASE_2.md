@@ -4,39 +4,9 @@
 
 ## GRUPO: MADRID
 
-[🖼️ Ver imagen de portada](Imagenes/pagina01_imagen1.png)
-
 ---
 
-## Organización
-
-**Cabeza del proyecto:** Daniel Llorca
-
-**Secretario:** Ismael Cerveró.
-- Suplente: Amin Boutighmass.
-
-**Responsable técnico:** Marc Sancho.
-- Suplente: Javier Ferris.
-
-## Repositorios
-
-**Carpeta de google drive:**
-<https://drive.google.com/drive/folders/1KXfeQd_wecn5S_aBjsynbgepLF8Dm7n8?usp=drive_link>
-
-**Github:**
-<https://github.com/marc-999/Projecte-intermodular-2-Madrid>
-
-## Herramientas
-
-- **Programas para comunicarse:** Whatsapp.
-- **Aplicaciones para la documentación:** LibreOffice Writer y Google documents.
-- **Repositorios:** Github y Google Drive.
-- **Herramientas para diagramas y mapas:** Flowchart.io
-- **Herramienta de gestión de projectos:** Trello.
-
----
-
-## Registro del dia: 25/9/2026
+## Instalación del Proxmox y configuración de las IP del servidor.
 
 Descargamos la ISO correspondiente del “Proxmox”.
 
@@ -62,11 +32,9 @@ Configuramos las Ips del servidor, y comprobamos si se han aplicado los cambios.
 
 ---
 
-## Registro del dia: 16/10/2026
+## Instalación del SO y configuración del switch CISCO.
 
-Instalamos el cliente de Ubuntu al ordenador.
-
-[🖼️ Ver imagen: instalación de Ubuntu](Imagenes/pagina06_imagen1.png)
+Instalamos el cliente de Linux Mint al ordenador.
 
 Instalamos y configuramos el “Putty”, para abrir los puertos del switch y conectarlo a telnet.
 
@@ -86,7 +54,7 @@ Comprobamos si los cambios se han guardado correctamente y vemos si nos podemos 
 
 ---
 
-## Registro del día: 23/10/26
+## Configuración de las VLAN
 
 Empezamos el día asignándole los nombres correspondientes a las VLAN.
 
