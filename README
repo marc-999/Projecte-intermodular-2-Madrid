@@ -1,23 +1,90 @@
-# Organització i Recursos del Projecte
+<h1 align="center">Organització i Recursos del Projecte</h1>
 
-## 👥 Organització
-* **Cap del projecte:** Daniel Llorca
-* **Secretari:** Ismael Cerveró
-  * *Suplent:* Amin Boutighmass
-* **Responsable tècnic:** Marc Sancho
-  * *Suplent:* Javier Ferris
+<p align="center">
+  <b>Projecte Intermodular 2 - Madrid</b>
+</p>
 
----
+<hr>
 
-## 📁 Repositoris i Enllaços
-* **Carpeta de Google Drive:** [Enllaç a Google Drive](https://drive.google.com/drive/folders/1KXfeQd_wecn5S_aBjsynbgepLF8Dm7n8?usp=drive_link)
-* **GitHub:** [Enllaç al repositori](https://github.com/marc-999/Projecte-intermodular-2-Madrid)
+<h2>👥 Organització del Personal</h2>
 
----
+<table>
+  <thead>
+    <tr>
+      <th>Rol</th>
+      <th>Titular</th>
+      <th>Suplent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Cap del projecte</b></td>
+      <td>Daniel Llorca</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><b>Secretari</b></td>
+      <td>Ismael Cerveró</td>
+      <td>Amin Boutighmass</td>
+    </tr>
+    <tr>
+      <td><b>Responsable tècnic</b></td>
+      <td>Marc Sancho</td>
+      <td>Javier Ferris</td>
+    </tr>
+  </tbody>
+</table>
 
-## 🛠️ Eines
-* **Comunicació:** WhatsApp
-* **Documentació:** LibreOffice Writer i Google Documents
-* **Repositoris:** GitHub i Google Drive
-* **Diagrames i mapes:** Flowchart.io
-* **Gestió del projecte:** Trello
+<br>
+
+<h2>📁 Repositoris</h2>
+
+<ul>
+  <li>
+    <b>Google Drive:</b> 
+    <a href="https://drive.google.com/drive/folders/1KXfeQd_wecn5S_aBjsynbgepLF8Dm7n8?usp=drive_link">
+      Carpeta de recursos i documentació compartida
+    </a>
+  </li>
+  <li>
+    <b>GitHub:</b> 
+    <a href="https://github.com/marc-999/Projecte-intermodular-2-Madrid">
+      Projecte-intermodular-2-Madrid
+    </a>
+  </li>
+</ul>
+
+<br>
+
+<h2>🛠️ Eines de Treball</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Categoria</th>
+      <th>Eines utilitzades</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>💬 Comunicació</b></td>
+      <td>WhatsApp</td>
+    </tr>
+    <tr>
+      <td><b>📄 Documentació</b></td>
+      <td>LibreOffice Writer, Google Documents</td>
+    </tr>
+    <tr>
+      <td><b>📂 Repositoris</b></td>
+      <td>GitHub, Google Drive</td>
+    </tr>
+    <tr>
+      <td><b>📊 Diagrames i Mapes</b></td>
+      <td>Flowchart.io</td>
+    </tr>
+    <tr>
+      <td><b>📋 Gestió de Projectes</b></td>
+      <td>Trello</td>
+    </tr>
+  </tbody>
+</table>
