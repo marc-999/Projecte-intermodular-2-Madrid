@@ -28,7 +28,7 @@ Configuramos las Ips del servidor, y comprobamos si se han aplicado los cambios.
 
 ![Configuración de las IPs del servidor](Imagenes/pagina04_imagen1.png)
 
-Instalamos el cliente de Ubuntu al ordenador.
+Instalamos el cliente de Linux Mint al ordenador (la captura es de Ubuntu Client porque probamos con este SO pero no funcionó y no hicimos fotos de la instalación de linux mint.)
 
 ![Instalación de Ubuntu](Imagenes/pagina05_imagen1.png)
 
