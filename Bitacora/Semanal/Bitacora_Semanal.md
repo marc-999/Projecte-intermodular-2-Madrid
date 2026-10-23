@@ -17,7 +17,7 @@
 
 ---
 
-## Semana 2 (16 de octubre de 2026)
+## Semana 2
 
 * **(a) Objetivo general del grupo:**
   * Instalar el cliente de Ubuntu en el ordenador.
@@ -34,7 +34,7 @@
 
 ---
 
-## Semana 3 (23 de octubre de 2026)
+## Semana 3
 
 * **(a) Objetivo general del grupo:**
   * Asignar los nombres correspondientes a las VLAN.
