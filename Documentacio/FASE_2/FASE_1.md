@@ -5,6 +5,7 @@
 ## GRUPO: MADRID
 
 ---
+## Fase 1.2 Instalacion de proxmox en el servidor y estudio de IPs
 
 Descargamos la ISO correspondiente del “Proxmox”.
 
@@ -64,6 +65,8 @@ Repetimos el proceso con todas las VLAN
 Aquí ponemos el comando “`show vlan brief`” para verificar que hemos creado correctamente las VLAN. En la comprobación nos percatamos de que hemos hecho algunos erorres.
 
 ![Resultado de show vlan brief](Imagenes/pagina08_imagen2.png)
+
+## Fase 1.3 Despliegue de equipos
 
 Corregimos los errores y volvemos a ejecutar el comando “`show vlan brief`” para ver si ya hemos corregido los errores.
 
