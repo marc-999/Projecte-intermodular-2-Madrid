@@ -1,15 +1,18 @@
-# Bitàcola Personal: [Nom de l'Integrant]
+Bitácora Personal: [
+Fecha: [AAAA-MM-DD]
 
----
+    a. Objetivo del día:
 
-## Data: [AAAA-MM-DD]
+        [Descripción breve del objetivo planificado para la sesión]
 
-* **a. Objectiu del dia:**
-  * [Descripció breu de l'objectiu planificat per a la sessió]
-* **b. Què s'ha fet:**
-  * [Detall de les tasques executades durant la classe/tallers]
-* **c. Què s'ha pogut aconseguir:**
-  * [Assoliments completats i resultats obtinguts]
-* **d. Què NO s'ha pogut aconseguir i per què:**
-  * [Tasques pendents, bloquejos, errades tècniques o falta de temps]
+    b. Qué se ha hecho:
 
+        [Detalle de las tareas ejecutadas durante la clase/talleres]
+
+    c. Qué se ha podido conseguir:
+
+        [Logros completados y resultados obtenidos]
+
+    d. Qué NO se ha podido conseguir y por qué:
+
+        [Tareas pendientes, bloqueos, errores técnicos o falta de tiempo]
