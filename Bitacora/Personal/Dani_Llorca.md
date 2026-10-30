@@ -1,6 +1,6 @@
 ## Bitácora Personal: Daniel Llorca (Semana 1)
 
-**Fecha:** [AAAA-MM-DD]
+**Fecha:** [2026-09-18]
 
 - **a. Objetivo del día:**
   - Coordinar la creación del grupo de proyecto y asegurar que todos los miembros tengan sus roles asignados correctamente.
@@ -23,7 +23,7 @@
 
 ## Bitácora Personal: Daniel Llorca (Semana 2)
 
-**Fecha:** [AAAA-MM-DD]
+**Fecha:** [2026-09-25]
 
 - **a. Objetivo del día:**
   - Supervisar la instalación del cliente de Ubuntu en el ordenador del equipo.
@@ -47,7 +47,7 @@
 
 ## Bitácora Personal: Daniel Llorca (Semana 3)
 
-**Fecha:** [AAAA-MM-DD]
+**Fecha:** [2026-10-30]
 
 - **a. Objetivo del día:**
   - Guiar al equipo en la asignación de nombres correspondientes a las VLAN.
