@@ -1,6 +1,6 @@
 ## Bitácora Personal: Ismael Cervero (Semana 1)
 
-**Fecha:** [AAAA-MM-DD]
+**Fecha:** [2026-09-18]
 
 - **a. Objetivo del día:**
   - Participar en la creación y organización del grupo de proyecto.
@@ -23,7 +23,7 @@
 
 ## Bitácora Personal: Ismael Cervero (Semana 2)
 
-**Fecha:** [AAAA-MM-DD]
+**Fecha:** [2026-09-25]
 
 - **a. Objetivo del día:**
   - Colaborar en la instalación del cliente de Ubuntu en el ordenador.
@@ -48,7 +48,7 @@
 
 ## Bitácora Personal: Ismael Cervero (Semana 3)
 
-**Fecha:** [AAAA-MM-DD]
+**Fecha:** [2026-10-23]
 
 - **a. Objetivo del día:**
   - Documentar la asignación de nombres correspondientes a cada una de las VLAN.
