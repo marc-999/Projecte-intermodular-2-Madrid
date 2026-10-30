@@ -47,7 +47,7 @@
 
 ## Bitácora Personal: Daniel Llorca (Semana 3)
 
-**Fecha:** [2026-10-30]
+**Fecha:** [2026-10-23]
 
 - **a. Objetivo del día:**
   - Guiar al equipo en la asignación de nombres correspondientes a las VLAN.
