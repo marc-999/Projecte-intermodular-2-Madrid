@@ -7,7 +7,7 @@
 ---
 ## Fase 1.2 Instalacion de proxmox en el servidor y estudio de IPs
 
-Descargamos la ISO correspondiente del “Proxmox”.
+Descarga de la imagen ISO oficial de Proxmox VE para el hipervisor.
 
 ![Descarga de la ISO de Proxmox](Imagenes/pagina02_imagen1.png)
 
@@ -19,7 +19,7 @@ Ahora preparamos todo para “flashear” la ISO en el USB.
 
 ![Preparación para flashear la ISO](Imagenes/pagina03_imagen1.png)
 
-Encendemos el servidor y le instalamos el “Proxmox” a éste.
+Encendido del servidor físico y ejecución del asistente de instalación de Proxmox VE.
 
 ![Servidor encendido](Imagenes/pagina03_imagen2.png)
 
@@ -29,7 +29,7 @@ Configuramos las Ips del servidor, y comprobamos si se han aplicado los cambios.
 
 ![Configuración de las IPs del servidor](Imagenes/pagina04_imagen1.png)
 
-Instalamos el cliente de Linux Mint al ordenador (la captura es de Ubuntu Client porque probamos con este SO pero no funcionó y no hicimos fotos de la instalación de linux mint.)
+Despliegue del cliente de Linux Mint en la estación de trabajo (Nota: la captura pertenece a pruebas previas con Ubuntu Client, descartado por incompatibilidades técnicas; no se documentó gráficamente la instalación final de Linux Mint).
 
 ![Instalación de Ubuntu](Imagenes/pagina05_imagen1.png)
 
