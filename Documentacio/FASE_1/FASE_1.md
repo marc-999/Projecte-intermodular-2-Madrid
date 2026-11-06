@@ -2,7 +2,7 @@
 
 # PROJECTE INTERMODULAR
 
-### Fase 1 · Despliegue de infraestructura de red y virtualización
+### Fase 1
 
 **Enric Soler i Godes** · 2º ASIX
 **Grupo Madrid**
@@ -13,7 +13,6 @@
 
 ## Índice
 
-- [Resumen ejecutivo](#resumen-ejecutivo)
 - [Práctica 2. Instalación de Proxmox en el servidor y estudio de IPs](#práctica-2-instalación-de-proxmox-en-el-servidor-y-estudio-de-ips)
   - [2.1 Instalación del hipervisor Proxmox VE](#21-instalación-del-hipervisor-proxmox-ve)
   - [2.2 Despliegue del cliente Linux](#22-despliegue-del-cliente-linux)
@@ -29,19 +28,6 @@
 
 ---
 
-## Resumen ejecutivo
-
-En esta primera fase se ha desplegado la infraestructura base del proyecto: un servidor físico con el hipervisor **Proxmox VE**, un cliente **Linux Mint** y un **switch Cisco** gestionado por Telnet. La red se ha segmentado en **cuatro VLAN** (servidores, comercial, producción y gestión), cada una con su propio direccionamiento /24, y se ha verificado la conectividad entre cliente y servidor mediante `ping`.
-
-| Elemento | Detalle |
-|:--|:--|
-| **Hipervisor** | Proxmox VE (instalación *bare metal*) |
-| **Cliente** | Linux Mint (físico) |
-| **Conmutación** | Switch Cisco, puertos 11 a 20 |
-| **Segmentación** | 4 VLAN: 210, 220, 230 y 299 |
-| **Direccionamiento** | Redes 10.2.X.0/24 |
-
----
 
 # Práctica 2. Instalación de Proxmox en el servidor y estudio de IPs
 
