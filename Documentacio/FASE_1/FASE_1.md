@@ -12,25 +12,25 @@
 
 Se descarga la imagen ISO oficial de Proxmox VE, que será el hipervisor instalado directamente sobre el hardware (*bare metal*) del servidor físico.
 
-![Descarga de la ISO de Proxmox](Imagenes/pagina02_imagen1.png)
+<img src="Imagenes/pagina02_imagen1.png" alt="Descarga de la ISO de Proxmox" width="500">
 
 Para generar el medio de instalación se utiliza **balenaEtcher**, herramienta que escribe la imagen ISO en un dispositivo USB y lo deja configurado como unidad de arranque.
 
-![Descarga de balenaEtcher](Imagenes/pagina02_imagen2.png)
+<img src="Imagenes/pagina02_imagen2.png" alt="Descarga de balenaEtcher" width="500">
 
 Se selecciona la ISO de origen y la unidad USB de destino, y se lanza el proceso de escritura (*flasheo*) del medio.
 
-![Preparación para flashear la ISO](Imagenes/pagina03_imagen1.png)
+<img src="Imagenes/pagina03_imagen1.png" alt="Preparación para flashear la ISO" width="500">
 
 A continuación se arranca el servidor físico desde el USB y se ejecuta el asistente de instalación de Proxmox VE.
 
-![Servidor encendido](Imagenes/pagina03_imagen2.png)
+<img src="Imagenes/pagina03_imagen2.png" alt="Servidor encendido" width="500">
 
-![Instalación de Proxmox](Imagenes/pagina03_imagen3.png)
+<img src="Imagenes/pagina03_imagen3.png" alt="Instalación de Proxmox" width="500">
 
 Durante la instalación se configura la red de gestión del servidor (dirección IP, máscara de subred, puerta de enlace y DNS). Una vez finalizada, se comprueba que los parámetros se han aplicado correctamente.
 
-![Configuración de las IPs del servidor](Imagenes/pagina04_imagen1.png)
+<img src="Imagenes/pagina04_imagen1.png" alt="Configuración de las IPs del servidor" width="500">
 
 ### Despliegue del cliente Linux
 
@@ -38,25 +38,25 @@ Se despliega el cliente Linux Mint en la estación de trabajo.
 
 > **Nota:** la captura pertenece a pruebas previas con Ubuntu Client, descartado por incompatibilidades técnicas. No se documentó gráficamente la instalación final de Linux Mint.
 
-![Instalación de Ubuntu](Imagenes/pagina05_imagen1.png)
+<img src="Imagenes/pagina05_imagen1.png" alt="Instalación de Ubuntu" width="500">
 
 ### Acceso y configuración del switch Cisco
 
 Se instala y configura **PuTTY** como cliente de terminal para acceder al switch Cisco y habilitar el acceso remoto por **Telnet**.
 
-![Instalación de Putty](Imagenes/pagina05_imagen2.png)
+<img src="Imagenes/pagina05_imagen2.png" alt="Instalación de Putty" width="500">
 
-![Configuración de Putty](Imagenes/pagina05_imagen3.png)
+<img src="Imagenes/pagina05_imagen3.png" alt="Configuración de Putty" width="500">
 
 Se realiza la configuración inicial del switch (acceso de gestión y parámetros básicos).
 
-![Switch (detalle)](Imagenes/pagina06_imagen1.png)
+<img src="Imagenes/pagina06_imagen1.png" alt="Switch (detalle)" width="500">
 
-![Configuración del switch](Imagenes/pagina06_imagen2.png)
+<img src="Imagenes/pagina06_imagen2.png" alt="Configuración del switch" width="500">
 
 Se verifica que la configuración se ha guardado correctamente y que es posible conectarse al switch por Telnet directamente, sin necesidad de PuTTY.
 
-![Comprobación de la conexión por telnet](Imagenes/pagina06_imagen3.png)
+<img src="Imagenes/pagina06_imagen3.png" alt="Comprobación de la conexión por telnet" width="500">
 
 ### Creación y nombrado de las VLAN
 
@@ -67,7 +67,7 @@ Switch(config)# vlan <id>
 Switch(config-vlan)# name <nombre>
 ```
 
-![Nombres de las VLAN](Imagenes/pagina07_imagen1.png)
+<img src="Imagenes/pagina07_imagen1.png" alt="Nombres de las VLAN" width="500">
 
 ### Asignación de interfaces a las VLAN
 
@@ -79,17 +79,17 @@ Switch(config-if)# switchport mode access
 Switch(config-if)# switchport access vlan 210
 ```
 
-![Configuración de la interfaz Gi0/12](Imagenes/pagina07_imagen2.png)
+<img src="Imagenes/pagina07_imagen2.png" alt="Configuración de la interfaz Gi0/12" width="500">
 
 El mismo procedimiento se repite para el resto de interfaces y VLAN.
 
-![Configuración del resto de VLAN](Imagenes/pagina08_imagen1.png)
+<img src="Imagenes/pagina08_imagen1.png" alt="Configuración del resto de VLAN" width="500">
 
 ### Verificación de las VLAN
 
 Se ejecuta el comando `show vlan brief` para validar la creación de las VLAN y la asignación de puertos. En la comprobación se detectan algunos errores de configuración (nombres o puertos asignados incorrectamente).
 
-![Resultado de show vlan brief](Imagenes/pagina08_imagen2.png)
+<img src="Imagenes/pagina08_imagen2.png" alt="Resultado de show vlan brief" width="500">
 
 ---
 
@@ -97,7 +97,7 @@ Se ejecuta el comando `show vlan brief` para validar la creación de las VLAN y 
 
 Se corrigen los errores detectados y se vuelve a ejecutar `show vlan brief` para confirmar que el estado de las VLAN y la asignación de puertos son los esperados.
 
-![show vlan brief tras corregir](Imagenes/llista_solucionada.png)
+<img src="Imagenes/llista_solucionada.png" alt="show vlan brief tras corregir" width="500">
 
 ### Inventario de dispositivos
 
@@ -142,7 +142,8 @@ Esta es la distribución final de los puertos 11 a 20 del switch Cisco, con la V
 
 Verificamos que la configuración de red está correctamente configurada y realizamos un `ping` al servidor para comprobar la conectividad entre cliente y servidor dentro de la VLAN 210.
 
-![Imatge de la configuració de la xarxa](Imagenes/config_xarxa.png)
+<img src="Imagenes/config_xarxa.png" alt="Imatge de la configuració de la xarxa" width="500">
 
-![Imatge del ping entre client i servidor](Imagenes/ping.png)
+<img src="Imagenes/ping.png" alt="Imatge del ping entre client i servidor" width="500">
+
 
