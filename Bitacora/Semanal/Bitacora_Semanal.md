@@ -48,3 +48,19 @@
   * Hemos conseguido todos los objetivos.
 * **(c) Qué NO hemos podido conseguir y por qué:**
   * Nada, hemos logrado todo y no nos ha faltado nada.
+ 
+* ## Semana 4
+
+* **(a) Objetivo general del grupo:**
+  * Corregir los errores generales de configuración detectados en las interfaces y reasignarlas a sus correspondientes VLANs.
+  * Configurar los direccionamientos IP y los parámetros de red necesarios para permitir la comunicación entre el servidor y el cliente.
+  * Verificar la conectividad abriendo la interfaz web de Proxmox desde el navegador del cliente.
+
+* **(b) Qué hemos podido conseguir:**
+  * Solucionamos los errores de configuración previos y reasignamos con éxito las interfaces a las VLANs designadas.
+  * Establecimos y validamos la configuración de red IP, logrando la conectividad directa entre el cliente y el servidor.
+  * Accedimos satisfactoriamente a la consola de administración de Proxmox mediante el navegador web del cliente.
+  * Cumplimos con la totalidad de los objetivos planificados para la sesión.
+
+* **(c) Qué NO hemos podido conseguir y por qué:**
+  * Ninguno. Se completaron todas las tareas asignadas dentro del tiempo previsto.
