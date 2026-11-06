@@ -64,3 +64,20 @@
 
 * **(c) Qué NO hemos podido conseguir y por qué:**
   * Ninguno. Se completaron todas las tareas asignadas dentro del tiempo previsto.
+
+## Semana 5
+
+* **(a) Objetivo general del grupo:**
+  * Desplegar y configurar una máquina virtual de Ubuntu Server sobre el entorno de virtualización Proxmox.
+  * Desplegar y configurar una máquina virtual con el sistema operativo Linux Mint en Proxmox.
+  * Instalar un sistema Ubuntu Server de forma nativa en un equipo cliente físico.
+  * Instalar un sistema Linux Mint de forma nativa en otro equipo cliente físico.
+
+* **(b) Qué hemos podido conseguir:**
+  * Creamos y configuramos con éxito las dos máquinas virtuales (Ubuntu Server y Linux Mint) dentro del hipervisor Proxmox.
+  * Realizamos la instalación y puesta a punto de Ubuntu Server en el equipo cliente designado.
+  * Completamos la instalación de Linux Mint en el segundo equipo cliente.
+  * Alcanzamos todos los objetivos marcados para la sesión de trabajo.
+
+* **(c) Qué NO hemos podido conseguir y por qué:**
+  * Ninguno. Todas las tareas de despliegue e instalación de sistemas operativos se completaron según lo previsto.
