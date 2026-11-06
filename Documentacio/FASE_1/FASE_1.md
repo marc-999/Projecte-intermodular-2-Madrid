@@ -79,3 +79,5 @@ Verificamos que la configuración de la red está correctamente configruada, y l
 ![Imatge del ping entre client i servidor](Imagenes/ping.png)
 
 
+
+
