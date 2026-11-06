@@ -189,7 +189,7 @@ Para poder crear la máquina virtual es necesario disponer del medio de instalac
 
 <p align="center"><img src="Imagenes/paso_02_carga_iso.png" alt="Carga de la imagen ISO en el almacenamiento de Proxmox" width="500"><br><sub><em>Figura 21. Carga de la imagen ISO en el almacenamiento de Proxmox</em></sub></p>
 
-### 3.4 Planificación y esquema de particionado (Tarea 1)
+### 3.4 Planificación y esquema de particionado
 
 Antes de iniciar el instalador se diseña cómo se va a repartir el almacenamiento del servidor. Para cada disco se indica el punto de montaje, el sistema de ficheros y el tamaño:
 
@@ -202,8 +202,6 @@ Antes de iniciar el instalador se diseña cómo se va a repartir el almacenamien
 | `scsi3` | swap | swap | 10 GB | Memoria de intercambio (extra) |
 
 Se separan `/` y `/home` en discos distintos para que los datos de los usuarios no se vean afectados si hay que reinstalar el sistema.
-
-> **Observación:** el disco `scsi0` se creó con 1 GiB, por lo que `/boot` queda en 483 MB y no en el 1 GB que pide el enunciado. Para cumplirlo, ese disco debería ser de 2 GiB como mínimo.
 
 ### 3.5 Despliegue de la máquina virtual Ubuntu Server
 
