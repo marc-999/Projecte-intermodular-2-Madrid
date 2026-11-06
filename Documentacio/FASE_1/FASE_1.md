@@ -77,3 +77,5 @@ Verificamos que la configuración de la red está correctamente configruada, y l
 ![Imatge de la configuració de la xarxa](Imagenes/config_xarxa.png)
 
 ![Imatge del ping entre client i servidor](Imagenes/ping.png)
+
+
