@@ -74,4 +74,5 @@ Corregimos los errores y volvemos a ejecutar el comando “`show vlan brief`” 
 
 Verificamos que la configuración de la red está correctamente configruada, y le hacemos un ping al servidor para ver que todo funciona correctamente.
 ![Imatge de la configuració de la xarxa](Imagenes/config_xarxa.png)
+
 ![Imatge del ping entre client i servidor](Imagenes/ping.png)
