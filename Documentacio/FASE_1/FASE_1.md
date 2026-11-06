@@ -43,7 +43,7 @@ En esta primera fase se ha desplegado la infraestructura base del proyecto: un s
 
 ---
 
-## Práctica 2. Instalación de Proxmox en el servidor y estudio de IPs
+# Práctica 2. Instalación de Proxmox en el servidor y estudio de IPs
 
 ### 2.1 Instalación del hipervisor Proxmox VE
 
@@ -178,7 +178,7 @@ Se ejecuta el comando `show vlan brief` para validar la creación de las VLAN y 
 
 ---
 
-## Práctica 3. Despliegue de equipos
+# Práctica 3. Despliegue de equipos
 
 Se corrigen los errores detectados y se vuelve a ejecutar `show vlan brief` para confirmar que el estado de las VLAN y la asignación de puertos son los esperados.
 
