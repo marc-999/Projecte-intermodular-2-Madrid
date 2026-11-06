@@ -191,34 +191,19 @@ Para poder crear la máquina virtual es necesario disponer del medio de instalac
 
 ### 3.4 Planificación y esquema de particionado (Tarea 1)
 
-Antes de iniciar el instalador se elabora la **tabla de diseño técnico** del almacenamiento, indicando para cada punto de montaje el disco, el tamaño, el sistema de ficheros y su función. El servidor debe cumplir el siguiente esquema obligatorio:
+Antes de iniciar el instalador se diseña cómo se va a repartir el almacenamiento del servidor. Para cada disco se indica el punto de montaje, el sistema de ficheros y el tamaño:
 
 | Disco | Punto de montaje | Sistema de ficheros | Tamaño | Uso |
 |:--|:--|:--|:-:|:--|
-| `scsi0` | `/boot/efi` | vfat (FAT32) | 538 MB | Partición de sistema EFI |
-| `scsi0` | `/boot` | ext4 | 483 MB | Núcleo Linux e *initramfs* |
+| `scsi0` | `/boot/efi` | vfat (FAT32) | 538 MB | Partición de arranque EFI |
+| `scsi0` | `/boot` | ext4 | 483 MB | Archivos de arranque del sistema |
 | `scsi1` | `/` | ext4 | 20 GB | Sistema operativo |
-| `scsi2` | `/home` | ext4 | 30 GB | Directorios de los usuarios |
+| `scsi2` | `/home` | ext4 | 30 GB | Carpetas de los usuarios |
 | `scsi3` | swap | swap | 10 GB | Memoria de intercambio (extra) |
 
-El criterio técnico del diseño es el siguiente:
+Se separan `/` y `/home` en discos distintos para que los datos de los usuarios no se vean afectados si hay que reinstalar el sistema.
 
-- **`/boot/efi` en vfat:** el firmware UEFI solo sabe leer la partición de sistema EFI (ESP) si está formateada en FAT32, y debe estar al inicio del disco de arranque.
-- **`/boot` separado en ext4:** aísla el núcleo y el *initramfs* del resto del sistema, lo que simplifica el arranque y la recuperación.
-- **`/` y `/home` en discos distintos:** los datos de los usuarios sobreviven a una reinstalación o restauración del sistema, y cada volumen puede ampliarse de forma independiente.
-
-> **Observación:** el disco `scsi0` se creó con 1 GiB, por lo que `/boot` queda en 483 MB, por debajo del 1 GB que indica el enunciado. Para ajustarse por completo, este disco debería tener un mínimo de 2 GiB (512 MB de ESP más 1 GB de `/boot`).
-
-El mismo esquema se aplica al equipo cliente, con tres discos virtuales:
-
-| Disco | Punto de montaje | Sistema de ficheros | Tamaño | Uso |
-|:--|:--|:--|:-:|:--|
-| `scsi0` | `/boot/efi` | vfat (FAT32) | 487 MiB | Partición de sistema EFI |
-| `scsi0` | `/boot` | ext4 | 977 MiB | Núcleo Linux e *initramfs* |
-| `scsi1` | `/` | ext4 | 30 GB | Sistema operativo |
-| `scsi2` | `/home` | ext4 | 30 GB | Directorios de los usuarios |
-
-En el cliente, el área de intercambio no se define como partición: la gestiona el instalador mediante el archivo `/swapfile`.
+> **Observación:** el disco `scsi0` se creó con 1 GiB, por lo que `/boot` queda en 483 MB y no en el 1 GB que pide el enunciado. Para cumplirlo, ese disco debería ser de 2 GiB como mínimo.
 
 ### 3.5 Despliegue de la máquina virtual Ubuntu Server
 
