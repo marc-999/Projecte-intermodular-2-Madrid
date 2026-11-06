@@ -1,76 +1,142 @@
+<div align="center">
+
 # PROJECTE INTERMODULAR
 
-**ENRIC SOLER I GODES — 2 ASIX**
+### Fase 1 · Despliegue de infraestructura de red y virtualización
 
-## GRUPO: MADRID
+**Enric Soler i Godes** · 2º ASIX
+**Grupo Madrid**
+
+![Proxmox VE](https://img.shields.io/badge/Hipervisor-Proxmox%20VE-E57000?style=for-the-badge)
+![Cisco](https://img.shields.io/badge/Switch-Cisco-1BA0D7?style=for-the-badge)
+![Linux Mint](https://img.shields.io/badge/Cliente-Linux%20Mint-87CF3E?style=for-the-badge)
+![VLAN](https://img.shields.io/badge/Segmentación-4%20VLAN-1F3864?style=for-the-badge)
+
+</div>
 
 ---
 
-## Fase 1.2 Instalación de Proxmox en el servidor y estudio de IPs
+## 📑 Índice
 
-### Instalación del hipervisor Proxmox VE
+1. [Resumen ejecutivo](#resumen-ejecutivo)
+2. [Instalación de Proxmox en el servidor y estudio de IPs](#1-instalación-de-proxmox-en-el-servidor-y-estudio-de-ips)
+   - [1.1 Instalación del hipervisor Proxmox VE](#11-instalación-del-hipervisor-proxmox-ve)
+   - [1.2 Despliegue del cliente Linux](#12-despliegue-del-cliente-linux)
+   - [1.3 Acceso y configuración del switch Cisco](#13-acceso-y-configuración-del-switch-cisco)
+   - [1.4 Creación y nombrado de las VLAN](#14-creación-y-nombrado-de-las-vlan)
+   - [1.5 Asignación de interfaces a las VLAN](#15-asignación-de-interfaces-a-las-vlan)
+   - [1.6 Verificación de las VLAN](#16-verificación-de-las-vlan)
+3. [Despliegue de equipos](#2-despliegue-de-equipos)
+   - [2.1 Inventario de dispositivos](#21-inventario-de-dispositivos)
+   - [2.2 Segmentación en VLAN](#22-segmentación-en-vlan)
+   - [2.3 Asignación de puertos del switch Cisco](#23-asignación-de-puertos-del-switch-cisco)
+   - [2.4 Verificación de conectividad](#24-verificación-de-conectividad)
+
+---
+
+## Resumen ejecutivo
+
+En esta primera fase se ha desplegado la infraestructura base del proyecto: un servidor físico con el hipervisor **Proxmox VE**, un cliente **Linux Mint** y un **switch Cisco** gestionado por Telnet. La red se ha segmentado en **cuatro VLAN** (servidores, comercial, producción y gestión), cada una con su propio direccionamiento /24, y se ha verificado la conectividad entre cliente y servidor mediante `ping`.
+
+| Elemento | Detalle |
+|:--|:--|
+| 🖥️ **Hipervisor** | Proxmox VE (instalación *bare metal*) |
+| 💻 **Cliente** | Linux Mint (físico) |
+| 🔌 **Conmutación** | Switch Cisco, puertos 11 a 20 |
+| 🧩 **Segmentación** | 4 VLAN: 210, 220, 230 y 299 |
+| 🌐 **Direccionamiento** | Redes 10.2.X.0/24 |
+
+---
+
+## 1. Instalación de Proxmox en el servidor y estudio de IPs
+
+### 1.1 Instalación del hipervisor Proxmox VE
 
 Se descarga la imagen ISO oficial de Proxmox VE, que será el hipervisor instalado directamente sobre el hardware (*bare metal*) del servidor físico.
 
 <p align="center">
-  <img src="Imagenes/pagina02_imagen1.png" alt="Descarga de la ISO de Proxmox" width="500">
+  <img src="Imagenes/pagina02_imagen1.png" alt="Descarga de la ISO de Proxmox" width="500"><br>
+  <sub><em>Figura 1. Descarga de la ISO de Proxmox</em></sub>
 </p>
+
 Para generar el medio de instalación se utiliza **balenaEtcher**, herramienta que escribe la imagen ISO en un dispositivo USB y lo deja configurado como unidad de arranque.
 
 <p align="center">
-  <img src="Imagenes/pagina02_imagen2.png" alt="Descarga de balenaEtcher" width="500">
+  <img src="Imagenes/pagina02_imagen2.png" alt="Descarga de balenaEtcher" width="500"><br>
+  <sub><em>Figura 2. Descarga de balenaEtcher</em></sub>
 </p>
+
 Se selecciona la ISO de origen y la unidad USB de destino, y se lanza el proceso de escritura (*flasheo*) del medio.
 
 <p align="center">
-  <img src="Imagenes/pagina03_imagen1.png" alt="Preparación para flashear la ISO" width="500">
+  <img src="Imagenes/pagina03_imagen1.png" alt="Preparación para flashear la ISO" width="500"><br>
+  <sub><em>Figura 3. Preparación para flashear la ISO</em></sub>
 </p>
+
 A continuación se arranca el servidor físico desde el USB y se ejecuta el asistente de instalación de Proxmox VE.
 
 <p align="center">
-  <img src="Imagenes/pagina03_imagen2.png" alt="Servidor encendido" width="500">
+  <img src="Imagenes/pagina03_imagen2.png" alt="Servidor encendido" width="500"><br>
+  <sub><em>Figura 4. Servidor encendido</em></sub>
 </p>
+
 <p align="center">
-  <img src="Imagenes/pagina03_imagen3.png" alt="Instalación de Proxmox" width="500">
+  <img src="Imagenes/pagina03_imagen3.png" alt="Instalación de Proxmox" width="500"><br>
+  <sub><em>Figura 5. Instalación de Proxmox</em></sub>
 </p>
+
 Durante la instalación se configura la red de gestión del servidor (dirección IP, máscara de subred, puerta de enlace y DNS). Una vez finalizada, se comprueba que los parámetros se han aplicado correctamente.
 
 <p align="center">
-  <img src="Imagenes/pagina04_imagen1.png" alt="Configuración de las IPs del servidor" width="500">
+  <img src="Imagenes/pagina04_imagen1.png" alt="Configuración de las IPs del servidor" width="500"><br>
+  <sub><em>Figura 6. Configuración de las IPs del servidor</em></sub>
 </p>
-### Despliegue del cliente Linux
+
+### 1.2 Despliegue del cliente Linux
 
 Se despliega el cliente Linux Mint en la estación de trabajo.
 
-> **Nota:** la captura pertenece a pruebas previas con Ubuntu Client, descartado por incompatibilidades técnicas. No se documentó gráficamente la instalación final de Linux Mint.
+> ⚠️ **Nota:** la captura pertenece a pruebas previas con Ubuntu Client, descartado por incompatibilidades técnicas. No se documentó gráficamente la instalación final de Linux Mint.
 
 <p align="center">
-  <img src="Imagenes/pagina05_imagen1.png" alt="Instalación de Ubuntu" width="500">
+  <img src="Imagenes/pagina05_imagen1.png" alt="Instalación de Ubuntu (pruebas previas)" width="500"><br>
+  <sub><em>Figura 7. Instalación de Ubuntu (pruebas previas)</em></sub>
 </p>
-### Acceso y configuración del switch Cisco
+
+### 1.3 Acceso y configuración del switch Cisco
 
 Se instala y configura **PuTTY** como cliente de terminal para acceder al switch Cisco y habilitar el acceso remoto por **Telnet**.
 
 <p align="center">
-  <img src="Imagenes/pagina05_imagen2.png" alt="Instalación de Putty" width="500">
+  <img src="Imagenes/pagina05_imagen2.png" alt="Instalación de PuTTY" width="500"><br>
+  <sub><em>Figura 8. Instalación de PuTTY</em></sub>
 </p>
+
 <p align="center">
-  <img src="Imagenes/pagina05_imagen3.png" alt="Configuración de Putty" width="500">
+  <img src="Imagenes/pagina05_imagen3.png" alt="Configuración de PuTTY" width="500"><br>
+  <sub><em>Figura 9. Configuración de PuTTY</em></sub>
 </p>
+
 Se realiza la configuración inicial del switch (acceso de gestión y parámetros básicos).
 
 <p align="center">
-  <img src="Imagenes/pagina06_imagen1.png" alt="Switch (detalle)" width="500">
+  <img src="Imagenes/pagina06_imagen1.png" alt="Switch (detalle)" width="500"><br>
+  <sub><em>Figura 10. Switch (detalle)</em></sub>
 </p>
+
 <p align="center">
-  <img src="Imagenes/pagina06_imagen2.png" alt="Configuración del switch" width="500">
+  <img src="Imagenes/pagina06_imagen2.png" alt="Configuración del switch" width="500"><br>
+  <sub><em>Figura 11. Configuración del switch</em></sub>
 </p>
+
 Se verifica que la configuración se ha guardado correctamente y que es posible conectarse al switch por Telnet directamente, sin necesidad de PuTTY.
 
 <p align="center">
-  <img src="Imagenes/pagina06_imagen3.png" alt="Comprobación de la conexión por telnet" width="500">
+  <img src="Imagenes/pagina06_imagen3.png" alt="Comprobación de la conexión por Telnet" width="500"><br>
+  <sub><em>Figura 12. Comprobación de la conexión por Telnet</em></sub>
 </p>
-### Creación y nombrado de las VLAN
+
+### 1.4 Creación y nombrado de las VLAN
 
 Se crean las VLAN en el switch y se les asigna el nombre correspondiente según su función.
 
@@ -80,11 +146,13 @@ Switch(config-vlan)# name <nombre>
 ```
 
 <p align="center">
-  <img src="Imagenes/pagina07_imagen1.png" alt="Nombres de las VLAN" width="500">
+  <img src="Imagenes/pagina07_imagen1.png" alt="Nombres de las VLAN" width="500"><br>
+  <sub><em>Figura 13. Nombres de las VLAN</em></sub>
 </p>
-### Asignación de interfaces a las VLAN
 
-En la captura se accede a la interfaz `GigabitEthernet 0/12` del switch Cisco. Una vez dentro, se configura la interfaz en **modo acceso** (`switchport mode access`) y se le asigna la **VLAN 210** (`switchport access vlan 210`), de modo que el puerto pase a transportar únicamente tráfico sin etiquetar de dicha VLAN.
+### 1.5 Asignación de interfaces a las VLAN
+
+Se accede a la interfaz `GigabitEthernet 0/12` del switch Cisco. Una vez dentro, se configura la interfaz en **modo acceso** (`switchport mode access`) y se le asigna la **VLAN 210** (`switchport access vlan 210`), de modo que el puerto pase a transportar únicamente tráfico sin etiquetar de dicha VLAN.
 
 ```
 Switch(config)# interface GigabitEthernet 0/12
@@ -93,75 +161,94 @@ Switch(config-if)# switchport access vlan 210
 ```
 
 <p align="center">
-  <img src="Imagenes/pagina07_imagen2.png" alt="Configuración de la interfaz Gi0/12" width="500">
+  <img src="Imagenes/pagina07_imagen2.png" alt="Configuración de la interfaz Gi0/12" width="500"><br>
+  <sub><em>Figura 14. Configuración de la interfaz Gi0/12</em></sub>
 </p>
+
 El mismo procedimiento se repite para el resto de interfaces y VLAN.
 
 <p align="center">
-  <img src="Imagenes/pagina08_imagen1.png" alt="Configuración del resto de VLAN" width="500">
+  <img src="Imagenes/pagina08_imagen1.png" alt="Configuración del resto de VLAN" width="500"><br>
+  <sub><em>Figura 15. Configuración del resto de VLAN</em></sub>
 </p>
-### Verificación de las VLAN
+
+### 1.6 Verificación de las VLAN
 
 Se ejecuta el comando `show vlan brief` para validar la creación de las VLAN y la asignación de puertos. En la comprobación se detectan algunos errores de configuración (nombres o puertos asignados incorrectamente).
 
 <p align="center">
-  <img src="Imagenes/pagina08_imagen2.png" alt="Resultado de show vlan brief" width="500">
+  <img src="Imagenes/pagina08_imagen2.png" alt="Resultado de show vlan brief" width="500"><br>
+  <sub><em>Figura 16. Resultado de show vlan brief</em></sub>
 </p>
+
 ---
 
-## Fase 1.3 Despliegue de equipos
+## 2. Despliegue de equipos
 
 Se corrigen los errores detectados y se vuelve a ejecutar `show vlan brief` para confirmar que el estado de las VLAN y la asignación de puertos son los esperados.
 
 <p align="center">
-  <img src="Imagenes/llista_solucionada.png" alt="show vlan brief tras corregir" width="500">
+  <img src="Imagenes/llista_solucionada.png" alt="show vlan brief tras corregir" width="500"><br>
+  <sub><em>Figura 17. show vlan brief tras corregir</em></sub>
 </p>
-### Inventario de dispositivos
+
+### 2.1 Inventario de dispositivos
 
 Estos son los dispositivos de los que disponemos y sus características:
 
 | Dispositivo | Tipo | IP | VLAN | Puerto | Estado |
-|-------------|------|----|------|--------|--------|
-| Proxmox | Servidor físico | 10.2.10.1/24 | 210 | 11 | Conectado |
-| Linux Mint | Cliente físico | 10.2.10.2/24 | 210 | 12 | Conectado |
-| Ubuntu Server | Servidor físico | 10.2.10.3/24 | 210 | Sin asignar | No conectado aún |
-| Switch Cisco | Gestión | 10.2.99.1/24 | 299 | Puerto de gestión | Activo |
+|:--|:--|:--|:-:|:--|:--|
+| **Proxmox** | Servidor físico | 10.2.10.1/24 | 210 | 11 | 🟢 Conectado |
+| **Linux Mint** | Cliente físico | 10.2.10.2/24 | 210 | 12 | 🟢 Conectado |
+| **Ubuntu Server** | Servidor físico | 10.2.10.3/24 | 210 | Sin asignar | 🟡 No conectado aún |
+| **Switch Cisco** | Gestión | 10.2.99.1/24 | 299 | Puerto de gestión | 🟢 Activo |
 
-### Segmentación en VLAN
+### 2.2 Segmentación en VLAN
 
 Estas son las VLAN que hemos asignado. Cada una dispone de su propio direccionamiento IP /24 y de una pareja de interfaces del switch:
 
 | VLAN | Nombre | Red | Interfaces del switch |
-|------|--------|-----|-----------------------|
-| 210 | servidor_mad | 10.2.10.0/24 | 11, 12 |
-| 220 | comercial_mad | 10.2.20.0/24 | 13, 17 |
-| 230 | produccion_mad | 10.2.30.0/24 | 14, 18 |
-| 299 | gestion_mad | 10.2.99.0/24 | 16, 19 |
+|:-:|:--|:--|:-:|
+| **210** | servidor_mad | 10.2.10.0/24 | 11, 12 |
+| **220** | comercial_mad | 10.2.20.0/24 | 13, 17 |
+| **230** | produccion_mad | 10.2.30.0/24 | 14, 18 |
+| **299** | gestion_mad | 10.2.99.0/24 | 16, 19 |
 
-### Asignación de puertos del switch Cisco
+### 2.3 Asignación de puertos del switch Cisco
 
 Esta es la distribución final de los puertos 11 a 20 del switch Cisco, con la VLAN a la que pertenece cada uno y el dispositivo conectado en la actualidad:
 
 | Puerto | VLAN | Nombre VLAN | Dispositivo conectado |
-|--------|------|-------------|-----------------------|
+|:-:|:-:|:--|:--|
 | 11 | 210 | servidor_mad | Servidor Proxmox |
 | 12 | 210 | servidor_mad | Cliente Linux Mint |
-| 13 | 220 | comercial_mad | Libre |
-| 14 | 230 | produccion_mad | Libre |
-| 15 | Sin asignar | - | Libre |
-| 16 | 299 | gestion_mad | Libre |
-| 17 | 220 | comercial_mad | Libre |
-| 18 | 230 | produccion_mad | Libre |
-| 19 | 299 | gestion_mad | Libre |
-| 20 | Sin asignar | - | Libre |
+| 13 | 220 | comercial_mad | *Libre* |
+| 14 | 230 | produccion_mad | *Libre* |
+| 15 | Sin asignar | - | *Libre* |
+| 16 | 299 | gestion_mad | *Libre* |
+| 17 | 220 | comercial_mad | *Libre* |
+| 18 | 230 | produccion_mad | *Libre* |
+| 19 | 299 | gestion_mad | *Libre* |
+| 20 | Sin asignar | - | *Libre* |
 
-### Verificación de conectividad
+### 2.4 Verificación de conectividad
 
 Verificamos que la configuración de red está correctamente configurada y realizamos un `ping` al servidor para comprobar la conectividad entre cliente y servidor dentro de la VLAN 210.
 
 <p align="center">
-  <img src="Imagenes/config_xarxa.png" alt="Imatge de la configuració de la xarxa" width="500">
+  <img src="Imagenes/config_xarxa.png" alt="Configuración de la red" width="500"><br>
+  <sub><em>Figura 18. Configuración de la red</em></sub>
 </p>
+
 <p align="center">
-  <img src="Imagenes/ping.png" alt="Imatge del ping entre client i servidor" width="500">
+  <img src="Imagenes/ping.png" alt="Ping entre cliente y servidor" width="500"><br>
+  <sub><em>Figura 19. Ping entre cliente y servidor</em></sub>
 </p>
+
+---
+
+<div align="center">
+
+**Projecte Intermodular** · Enric Soler i Godes · 2º ASIX · Grupo Madrid
+
+</div>
