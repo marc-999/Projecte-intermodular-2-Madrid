@@ -13,46 +13,72 @@
 
 ## Índice
 
-- [Resumen ejecutivo](#resumen-ejecutivo)
 - [Práctica 2. Instalación de Proxmox en el servidor y estudio de IPs](#práctica-2-instalación-de-proxmox-en-el-servidor-y-estudio-de-ips)
-  - [2.1 Instalación del hipervisor Proxmox VE](#21-instalación-del-hipervisor-proxmox-ve)
-  - [2.2 Despliegue del cliente Linux](#22-despliegue-del-cliente-linux)
-  - [2.3 Acceso y configuración del switch Cisco](#23-acceso-y-configuración-del-switch-cisco)
-  - [2.4 Creación y nombrado de las VLAN](#24-creación-y-nombrado-de-las-vlan)
-  - [2.5 Asignación de interfaces a las VLAN](#25-asignación-de-interfaces-a-las-vlan)
-  - [2.6 Verificación de las VLAN](#26-verificación-de-las-vlan)
+  - [2.1 Esquema de red](#21-esquema-de-red)
+  - [2.2 Instalación del hipervisor Proxmox VE](#22-instalación-del-hipervisor-proxmox-ve)
+  - [2.3 Despliegue del cliente Linux](#23-despliegue-del-cliente-linux)
+  - [2.4 Acceso y configuración del switch Cisco](#24-acceso-y-configuración-del-switch-cisco)
+  - [2.5 Creación y nombrado de las VLAN](#25-creación-y-nombrado-de-las-vlan)
+  - [2.6 Asignación de interfaces a las VLAN](#26-asignación-de-interfaces-a-las-vlan)
+  - [2.7 Verificación de las VLAN](#27-verificación-de-las-vlan)
 - [Práctica 3. Despliegue de equipos](#práctica-3-despliegue-de-equipos)
-  - [3.1 Inventario de dispositivos](#31-inventario-de-dispositivos)
-  - [3.2 Segmentación en VLAN](#32-segmentación-en-vlan)
-  - [3.3 Asignación de puertos del switch Cisco](#33-asignación-de-puertos-del-switch-cisco)
-  - [3.4 Verificación de conectividad](#34-verificación-de-conectividad)
-  - [3.5 Acceso a la interfaz web de Proxmox VE](#35-acceso-a-la-interfaz-web-de-proxmox-ve)
-  - [3.6 Carga de la imagen ISO](#36-carga-de-la-imagen-iso)
-  - [3.7 Planificación y esquema de particionado (Tarea 1)](#37-planificación-y-esquema-de-particionado-tarea-1)
-  - [3.8 Despliegue de la máquina virtual Ubuntu Server](#38-despliegue-de-la-máquina-virtual-ubuntu-server)
-  - [3.9 Verificación del almacenamiento en Ubuntu Server](#39-verificación-del-almacenamiento-en-ubuntu-server)
-  - [3.10 Despliegue de la máquina virtual cliente Linux Mint](#310-despliegue-de-la-máquina-virtual-cliente-linux-mint)
-  - [3.11 Verificación del almacenamiento en Linux Mint](#311-verificación-del-almacenamiento-en-linux-mint)
-
----
-
-## Resumen ejecutivo
-
-En esta primera fase se ha desplegado la infraestructura base del proyecto: un servidor físico con el hipervisor **Proxmox VE**, un cliente **Linux Mint** y un **switch Cisco** gestionado por Telnet. La red se ha segmentado en **cuatro VLAN** (servidores, comercial, producción y gestión), cada una con su propio direccionamiento /24, y se ha verificado la conectividad entre cliente y servidor mediante `ping`.
-
-| Elemento | Detalle |
-|:--|:--|
-| **Hipervisor** | Proxmox VE (instalación *bare metal*) |
-| **Cliente** | Linux Mint (físico) |
-| **Conmutación** | Switch Cisco, puertos 11 a 20 |
-| **Segmentación** | 4 VLAN: 210, 220, 230 y 299 |
-| **Direccionamiento** | Redes 10.2.X.0/24 |
+  - [3.1 Verificación de conectividad](#31-verificación-de-conectividad)
+  - [3.2 Acceso a la interfaz web de Proxmox VE](#32-acceso-a-la-interfaz-web-de-proxmox-ve)
+  - [3.3 Carga de la imagen ISO](#33-carga-de-la-imagen-iso)
+  - [3.4 Planificación y esquema de particionado (Tarea 1)](#34-planificación-y-esquema-de-particionado-tarea-1)
+  - [3.5 Despliegue de la máquina virtual Ubuntu Server](#35-despliegue-de-la-máquina-virtual-ubuntu-server)
+  - [3.6 Verificación del almacenamiento en Ubuntu Server](#36-verificación-del-almacenamiento-en-ubuntu-server)
+  - [3.7 Despliegue de la máquina virtual cliente Linux Mint](#37-despliegue-de-la-máquina-virtual-cliente-linux-mint)
+  - [3.8 Verificación del almacenamiento en Linux Mint](#38-verificación-del-almacenamiento-en-linux-mint)
 
 ---
 
 # Práctica 2. Instalación de Proxmox en el servidor y estudio de IPs
 
-### 2.1 Instalación del hipervisor Proxmox VE
+### 2.1 Esquema de red
+
+Antes de instalar el hipervisor se define el esquema de red del entorno: los dispositivos disponibles, las VLAN configuradas en el switch y la asignación de sus puertos.
+
+**Inventario de dispositivos**
+
+Estos son los dispositivos de los que disponemos y sus características:
+
+| Dispositivo | Tipo | IP | VLAN | Puerto | Estado |
+|:--|:--|:--|:-:|:--|:--|
+| **Proxmox** | Servidor físico | 10.2.10.1/24 | 210 | 11 | Conectado |
+| **Linux Mint** | Cliente físico | 10.2.10.2/24 | 210 | 12 | Conectado |
+| **Ubuntu Server** | Servidor físico | 10.2.10.3/24 | 210 | Sin asignar | No conectado aún |
+| **Switch Cisco** | Gestión | 10.2.99.1/24 | 299 | Puerto de gestión | Activo |
+
+**Segmentación en VLAN**
+
+Estas son las VLAN que hemos asignado. Cada una dispone de su propio direccionamiento IP /24 y de una pareja de interfaces del switch:
+
+| VLAN | Nombre | Red | Interfaces del switch |
+|:-:|:--|:--|:-:|
+| **210** | servidor_mad | 10.2.10.0/24 | 11, 12 |
+| **220** | comercial_mad | 10.2.20.0/24 | 13, 17 |
+| **230** | produccion_mad | 10.2.30.0/24 | 14, 18 |
+| **299** | gestion_mad | 10.2.99.0/24 | 16, 19 |
+
+**Asignación de puertos del switch Cisco**
+
+Esta es la distribución final de los puertos 11 a 20 del switch Cisco, con la VLAN a la que pertenece cada uno y el dispositivo conectado en la actualidad:
+
+| Puerto | VLAN | Nombre VLAN | Dispositivo conectado |
+|:-:|:-:|:--|:--|
+| 11 | 210 | servidor_mad | Servidor Proxmox |
+| 12 | 210 | servidor_mad | Cliente Linux Mint |
+| 13 | 220 | comercial_mad | *Libre* |
+| 14 | 230 | produccion_mad | *Libre* |
+| 15 | Sin asignar | - | *Libre* |
+| 16 | 299 | gestion_mad | *Libre* |
+| 17 | 220 | comercial_mad | *Libre* |
+| 18 | 230 | produccion_mad | *Libre* |
+| 19 | 299 | gestion_mad | *Libre* |
+| 20 | Sin asignar | - | *Libre* |
+
+### 2.2 Instalación del hipervisor Proxmox VE
 
 Se descarga la imagen ISO oficial de Proxmox VE, que será el hipervisor instalado directamente sobre el hardware (*bare metal*) del servidor físico.
 
@@ -76,7 +102,7 @@ Durante la instalación se configura la red de gestión del servidor (dirección
 
 <p align="center"><img src="Imagenes/pagina04_imagen1.png" alt="Configuración de las IPs del servidor" width="500"><br><sub><em>Figura 6. Configuración de las IPs del servidor</em></sub></p>
 
-### 2.2 Despliegue del cliente Linux
+### 2.3 Despliegue del cliente Linux
 
 Se despliega el cliente Linux Mint en la estación de trabajo.
 
@@ -84,7 +110,7 @@ Se despliega el cliente Linux Mint en la estación de trabajo.
 
 <p align="center"><img src="Imagenes/pagina05_imagen1.png" alt="Instalación de Ubuntu (pruebas previas)" width="500"><br><sub><em>Figura 7. Instalación de Ubuntu (pruebas previas)</em></sub></p>
 
-### 2.3 Acceso y configuración del switch Cisco
+### 2.4 Acceso y configuración del switch Cisco
 
 Se instala y configura **PuTTY** como cliente de terminal para acceder al switch Cisco y habilitar el acceso remoto por **Telnet**.
 
@@ -102,7 +128,7 @@ Se verifica que la configuración se ha guardado correctamente y que es posible 
 
 <p align="center"><img src="Imagenes/pagina06_imagen3.png" alt="Comprobación de la conexión por Telnet" width="500"><br><sub><em>Figura 12. Comprobación de la conexión por Telnet</em></sub></p>
 
-### 2.4 Creación y nombrado de las VLAN
+### 2.5 Creación y nombrado de las VLAN
 
 Se crean las VLAN en el switch y se les asigna el nombre correspondiente según su función.
 
@@ -113,7 +139,7 @@ Switch(config-vlan)# name <nombre>
 
 <p align="center"><img src="Imagenes/pagina07_imagen1.png" alt="Nombres de las VLAN" width="500"><br><sub><em>Figura 13. Nombres de las VLAN</em></sub></p>
 
-### 2.5 Asignación de interfaces a las VLAN
+### 2.6 Asignación de interfaces a las VLAN
 
 Se accede a la interfaz `GigabitEthernet 0/12` del switch Cisco. Una vez dentro, se configura la interfaz en **modo acceso** (`switchport mode access`) y se le asigna la **VLAN 210** (`switchport access vlan 210`), de modo que el puerto pase a transportar únicamente tráfico sin etiquetar de dicha VLAN.
 
@@ -129,7 +155,7 @@ El mismo procedimiento se repite para el resto de interfaces y VLAN.
 
 <p align="center"><img src="Imagenes/pagina08_imagen1.png" alt="Configuración del resto de VLAN" width="500"><br><sub><em>Figura 15. Configuración del resto de VLAN</em></sub></p>
 
-### 2.6 Verificación de las VLAN
+### 2.7 Verificación de las VLAN
 
 Se ejecuta el comando `show vlan brief` para validar la creación de las VLAN y la asignación de puertos. En la comprobación se detectan algunos errores de configuración (nombres o puertos asignados incorrectamente).
 
@@ -143,46 +169,7 @@ Se corrigen los errores detectados y se vuelve a ejecutar `show vlan brief` para
 
 <p align="center"><img src="Imagenes/llista_solucionada.png" alt="show vlan brief tras corregir" width="500"><br><sub><em>Figura 17. show vlan brief tras corregir</em></sub></p>
 
-### 3.1 Inventario de dispositivos
-
-Estos son los dispositivos de los que disponemos y sus características:
-
-| Dispositivo | Tipo | IP | VLAN | Puerto | Estado |
-|:--|:--|:--|:-:|:--|:--|
-| **Proxmox** | Servidor físico | 10.2.10.1/24 | 210 | 11 | Conectado |
-| **Linux Mint** | Cliente físico | 10.2.10.2/24 | 210 | 12 | Conectado |
-| **Ubuntu Server** | Servidor físico | 10.2.10.3/24 | 210 | Sin asignar | No conectado aún |
-| **Switch Cisco** | Gestión | 10.2.99.1/24 | 299 | Puerto de gestión | Activo |
-
-### 3.2 Segmentación en VLAN
-
-Estas son las VLAN que hemos asignado. Cada una dispone de su propio direccionamiento IP /24 y de una pareja de interfaces del switch:
-
-| VLAN | Nombre | Red | Interfaces del switch |
-|:-:|:--|:--|:-:|
-| **210** | servidor_mad | 10.2.10.0/24 | 11, 12 |
-| **220** | comercial_mad | 10.2.20.0/24 | 13, 17 |
-| **230** | produccion_mad | 10.2.30.0/24 | 14, 18 |
-| **299** | gestion_mad | 10.2.99.0/24 | 16, 19 |
-
-### 3.3 Asignación de puertos del switch Cisco
-
-Esta es la distribución final de los puertos 11 a 20 del switch Cisco, con la VLAN a la que pertenece cada uno y el dispositivo conectado en la actualidad:
-
-| Puerto | VLAN | Nombre VLAN | Dispositivo conectado |
-|:-:|:-:|:--|:--|
-| 11 | 210 | servidor_mad | Servidor Proxmox |
-| 12 | 210 | servidor_mad | Cliente Linux Mint |
-| 13 | 220 | comercial_mad | *Libre* |
-| 14 | 230 | produccion_mad | *Libre* |
-| 15 | Sin asignar | - | *Libre* |
-| 16 | 299 | gestion_mad | *Libre* |
-| 17 | 220 | comercial_mad | *Libre* |
-| 18 | 230 | produccion_mad | *Libre* |
-| 19 | 299 | gestion_mad | *Libre* |
-| 20 | Sin asignar | - | *Libre* |
-
-### 3.4 Verificación de conectividad
+### 3.1 Verificación de conectividad
 
 Verificamos que la configuración de red está correctamente configurada y realizamos un `ping` al servidor para comprobar la conectividad entre cliente y servidor dentro de la VLAN 210.
 
@@ -190,19 +177,19 @@ Verificamos que la configuración de red está correctamente configurada y reali
 
 <p align="center"><img src="Imagenes/ping.png" alt="Ping entre cliente y servidor" width="500"><br><sub><em>Figura 19. Ping entre cliente y servidor</em></sub></p>
 
-### 3.5 Acceso a la interfaz web de Proxmox VE
+### 3.2 Acceso a la interfaz web de Proxmox VE
 
 Una vez finalizada la configuración de red del servidor, se accede a la consola de administración de Proxmox VE mediante un navegador web, a través del puerto HTTPS **8006** de la IP de gestión del host (`https://10.2.10.1:8006`). La pantalla de inicio de sesión solicita usuario y contraseña, y permite seleccionar el *realm* de autenticación (en este caso **Linux PAM standard authentication**, que valida contra los usuarios del sistema operativo del host) y el idioma de la interfaz.
 
 <p align="center"><img src="Imagenes/paso_01_acceso_web_proxmox.png" alt="Pantalla de inicio de sesión de Proxmox VE" width="500"><br><sub><em>Figura 20. Pantalla de inicio de sesión de Proxmox VE</em></sub></p>
 
-### 3.6 Carga de la imagen ISO
+### 3.3 Carga de la imagen ISO
 
 Para poder crear la máquina virtual es necesario disponer del medio de instalación en el almacenamiento del nodo. Se sube la imagen ISO de Ubuntu Server al almacenamiento `local` de Proxmox, de forma que quede disponible como unidad de CD/DVD virtual en el asistente de creación de máquinas. El archivo ocupa **2,73 GiB** y se identifica con el tipo MIME `application/vnd.efi.iso`. Proxmox avisa de que las subidas se almacenan temporalmente en `/var/tmp`, por lo que debe haber espacio libre suficiente en esa ruta antes de iniciar la carga.
 
 <p align="center"><img src="Imagenes/paso_02_carga_iso.png" alt="Carga de la imagen ISO en el almacenamiento de Proxmox" width="500"><br><sub><em>Figura 21. Carga de la imagen ISO en el almacenamiento de Proxmox</em></sub></p>
 
-### 3.7 Planificación y esquema de particionado (Tarea 1)
+### 3.4 Planificación y esquema de particionado (Tarea 1)
 
 Antes de iniciar el instalador se elabora la **tabla de diseño técnico** del almacenamiento, indicando para cada punto de montaje el disco, el tamaño, el sistema de ficheros y su función. El servidor debe cumplir el siguiente esquema obligatorio:
 
@@ -233,7 +220,7 @@ El mismo esquema se aplica al equipo cliente, con tres discos virtuales:
 
 En el cliente, el área de intercambio no se define como partición: la gestiona el instalador mediante el archivo `/swapfile`.
 
-### 3.8 Despliegue de la máquina virtual Ubuntu Server
+### 3.5 Despliegue de la máquina virtual Ubuntu Server
 
 Se crea la máquina virtual **ubuntuSRV** en el nodo `madrid` con el asistente de Proxmox. Antes de terminar, la pantalla de confirmación permite revisar sus características principales:
 
@@ -248,7 +235,7 @@ Se crea la máquina virtual **ubuntuSRV** en el nodo `madrid` con el asistente d
 
 <p align="center"><img src="Imagenes/paso_03_specs_ubuntu_server.png" alt="Características de la máquina virtual Ubuntu Server" width="500"><br><sub><em>Figura 22. Características de la máquina virtual Ubuntu Server</em></sub></p>
 
-Siguiendo el esquema planificado en el apartado 3.7, durante la instalación se configura el almacenamiento de forma manual, asignando cada punto de montaje a su disco.
+Siguiendo el esquema planificado en el apartado 3.4, durante la instalación se configura el almacenamiento de forma manual, asignando cada punto de montaje a su disco.
 
 <p align="center"><img src="Imagenes/paso_04_particiones_ubuntu_server.png" alt="Esquema de particiones del servidor Ubuntu Server" width="500"><br><sub><em>Figura 23. Esquema de particiones del servidor Ubuntu Server</em></sub></p>
 
@@ -256,7 +243,7 @@ Después se indica el nombre del servidor (`srv-ubuntu`), el usuario (`ubuntu`) 
 
 <p align="center"><img src="Imagenes/paso_05_hostname_usuario_ubuntu_server.png" alt="Nombre del servidor, usuario y contraseña" width="500"><br><sub><em>Figura 24. Nombre del servidor, usuario y contraseña</em></sub></p>
 
-### 3.9 Verificación del almacenamiento en Ubuntu Server
+### 3.6 Verificación del almacenamiento en Ubuntu Server
 
 Con el sistema ya instalado, se comprueba desde la terminal que todo está como se planificó. Primero se entra en el directorio `/sys` y se muestra su contenido; después se ejecuta `df -h`, que lista las particiones montadas con su tamaño y su punto de montaje.
 
@@ -278,7 +265,7 @@ $ sudo nano /etc/fstab
 
 <p align="center"><img src="Imagenes/paso_07_fstab_ubuntu_server.png" alt="Contenido del archivo /etc/fstab en Ubuntu Server" width="500"><br><sub><em>Figura 26. Contenido del archivo /etc/fstab en Ubuntu Server</em></sub></p>
 
-### 3.10 Despliegue de la máquina virtual cliente Linux Mint
+### 3.7 Despliegue de la máquina virtual cliente Linux Mint
 
 El cliente se crea también como máquina virtual en Proxmox, a partir de la imagen `linuxmint-22.3-cinnamon-64bit.iso`. En la pestaña **SO** se elige la imagen y se indica que el sistema es de tipo Linux.
 
@@ -300,7 +287,7 @@ Por último, se crea el usuario del equipo (`mintmadrid`) y su contraseña.
 
 <p align="center"><img src="Imagenes/paso_10_usuario_mint.png" alt="Creación del usuario y la contraseña del cliente" width="500"><br><sub><em>Figura 31. Creación del usuario y la contraseña del cliente</em></sub></p>
 
-### 3.11 Verificación del almacenamiento en Linux Mint
+### 3.8 Verificación del almacenamiento en Linux Mint
 
 Ya instalado el cliente, se repiten las comprobaciones en la terminal: se lista el contenido de `/sys/firmware/efi` y se ejecuta `lsblk`, que muestra los discos y sus particiones.
 
