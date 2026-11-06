@@ -61,7 +61,7 @@ Una vez dentro, se configura esa interfaz en modo acceso (`switchport mode acces
 Repetimos el proceso con todas las VLAN
 
 ![Configuración del resto de VLAN](Imagenes/pagina08_imagen1.png)
-
+servidor
 Aquí ponemos el comando “`show vlan brief`” para verificar que hemos creado correctamente las VLAN. En la comprobación nos percatamos de que hemos hecho algunos erorres.
 
 ![Resultado de show vlan brief](Imagenes/pagina08_imagen2.png)
@@ -70,7 +70,7 @@ Aquí ponemos el comando “`show vlan brief`” para verificar que hemos creado
 
 Corregimos los errores y volvemos a ejecutar el comando “`show vlan brief`” para ver si ya hemos corregido los errores.
 
-![show vlan brief tras corregir](Imagenes/pagina09_imagen1.png)
+![show vlan brief tras corregir](Imagenes/llista_solucionada.png)
 
 Verificamos que la configuración de la red está correctamente configruada, y le hacemos un ping al servidor para ver que todo funciona correctamente.
 
