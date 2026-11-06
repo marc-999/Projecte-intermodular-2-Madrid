@@ -7,30 +7,25 @@
 **Enric Soler i Godes** · 2º ASIX
 **Grupo Madrid**
 
-![Proxmox VE](https://img.shields.io/badge/Hipervisor-Proxmox%20VE-E57000?style=for-the-badge)
-![Cisco](https://img.shields.io/badge/Switch-Cisco-1BA0D7?style=for-the-badge)
-![Linux Mint](https://img.shields.io/badge/Cliente-Linux%20Mint-87CF3E?style=for-the-badge)
-![VLAN](https://img.shields.io/badge/Segmentación-4%20VLAN-1F3864?style=for-the-badge)
-
 </div>
 
 ---
 
-## 📑 Índice
+## Índice
 
-1. [Resumen ejecutivo](#resumen-ejecutivo)
-2. [Instalación de Proxmox en el servidor y estudio de IPs](#1-instalación-de-proxmox-en-el-servidor-y-estudio-de-ips)
-   - [1.1 Instalación del hipervisor Proxmox VE](#11-instalación-del-hipervisor-proxmox-ve)
-   - [1.2 Despliegue del cliente Linux](#12-despliegue-del-cliente-linux)
-   - [1.3 Acceso y configuración del switch Cisco](#13-acceso-y-configuración-del-switch-cisco)
-   - [1.4 Creación y nombrado de las VLAN](#14-creación-y-nombrado-de-las-vlan)
-   - [1.5 Asignación de interfaces a las VLAN](#15-asignación-de-interfaces-a-las-vlan)
-   - [1.6 Verificación de las VLAN](#16-verificación-de-las-vlan)
-3. [Despliegue de equipos](#2-despliegue-de-equipos)
-   - [2.1 Inventario de dispositivos](#21-inventario-de-dispositivos)
-   - [2.2 Segmentación en VLAN](#22-segmentación-en-vlan)
-   - [2.3 Asignación de puertos del switch Cisco](#23-asignación-de-puertos-del-switch-cisco)
-   - [2.4 Verificación de conectividad](#24-verificación-de-conectividad)
+- [Resumen ejecutivo](#resumen-ejecutivo)
+- [Práctica 2. Instalación de Proxmox en el servidor y estudio de IPs](#práctica-2-instalación-de-proxmox-en-el-servidor-y-estudio-de-ips)
+  - [2.1 Instalación del hipervisor Proxmox VE](#21-instalación-del-hipervisor-proxmox-ve)
+  - [2.2 Despliegue del cliente Linux](#22-despliegue-del-cliente-linux)
+  - [2.3 Acceso y configuración del switch Cisco](#23-acceso-y-configuración-del-switch-cisco)
+  - [2.4 Creación y nombrado de las VLAN](#24-creación-y-nombrado-de-las-vlan)
+  - [2.5 Asignación de interfaces a las VLAN](#25-asignación-de-interfaces-a-las-vlan)
+  - [2.6 Verificación de las VLAN](#26-verificación-de-las-vlan)
+- [Práctica 3. Despliegue de equipos](#práctica-3-despliegue-de-equipos)
+  - [3.1 Inventario de dispositivos](#31-inventario-de-dispositivos)
+  - [3.2 Segmentación en VLAN](#32-segmentación-en-vlan)
+  - [3.3 Asignación de puertos del switch Cisco](#33-asignación-de-puertos-del-switch-cisco)
+  - [3.4 Verificación de conectividad](#34-verificación-de-conectividad)
 
 ---
 
@@ -40,17 +35,17 @@ En esta primera fase se ha desplegado la infraestructura base del proyecto: un s
 
 | Elemento | Detalle |
 |:--|:--|
-| 🖥️ **Hipervisor** | Proxmox VE (instalación *bare metal*) |
-| 💻 **Cliente** | Linux Mint (físico) |
-| 🔌 **Conmutación** | Switch Cisco, puertos 11 a 20 |
-| 🧩 **Segmentación** | 4 VLAN: 210, 220, 230 y 299 |
-| 🌐 **Direccionamiento** | Redes 10.2.X.0/24 |
+| **Hipervisor** | Proxmox VE (instalación *bare metal*) |
+| **Cliente** | Linux Mint (físico) |
+| **Conmutación** | Switch Cisco, puertos 11 a 20 |
+| **Segmentación** | 4 VLAN: 210, 220, 230 y 299 |
+| **Direccionamiento** | Redes 10.2.X.0/24 |
 
 ---
 
-## 1. Instalación de Proxmox en el servidor y estudio de IPs
+## Práctica 2. Instalación de Proxmox en el servidor y estudio de IPs
 
-### 1.1 Instalación del hipervisor Proxmox VE
+### 2.1 Instalación del hipervisor Proxmox VE
 
 Se descarga la imagen ISO oficial de Proxmox VE, que será el hipervisor instalado directamente sobre el hardware (*bare metal*) del servidor físico.
 
@@ -92,7 +87,7 @@ Durante la instalación se configura la red de gestión del servidor (dirección
   <sub><em>Figura 6. Configuración de las IPs del servidor</em></sub>
 </p>
 
-### 1.2 Despliegue del cliente Linux
+### 2.2 Despliegue del cliente Linux
 
 Se despliega el cliente Linux Mint en la estación de trabajo.
 
@@ -103,7 +98,7 @@ Se despliega el cliente Linux Mint en la estación de trabajo.
   <sub><em>Figura 7. Instalación de Ubuntu (pruebas previas)</em></sub>
 </p>
 
-### 1.3 Acceso y configuración del switch Cisco
+### 2.3 Acceso y configuración del switch Cisco
 
 Se instala y configura **PuTTY** como cliente de terminal para acceder al switch Cisco y habilitar el acceso remoto por **Telnet**.
 
@@ -136,7 +131,7 @@ Se verifica que la configuración se ha guardado correctamente y que es posible 
   <sub><em>Figura 12. Comprobación de la conexión por Telnet</em></sub>
 </p>
 
-### 1.4 Creación y nombrado de las VLAN
+### 2.4 Creación y nombrado de las VLAN
 
 Se crean las VLAN en el switch y se les asigna el nombre correspondiente según su función.
 
@@ -150,7 +145,7 @@ Switch(config-vlan)# name <nombre>
   <sub><em>Figura 13. Nombres de las VLAN</em></sub>
 </p>
 
-### 1.5 Asignación de interfaces a las VLAN
+### 2.5 Asignación de interfaces a las VLAN
 
 Se accede a la interfaz `GigabitEthernet 0/12` del switch Cisco. Una vez dentro, se configura la interfaz en **modo acceso** (`switchport mode access`) y se le asigna la **VLAN 210** (`switchport access vlan 210`), de modo que el puerto pase a transportar únicamente tráfico sin etiquetar de dicha VLAN.
 
@@ -172,7 +167,7 @@ El mismo procedimiento se repite para el resto de interfaces y VLAN.
   <sub><em>Figura 15. Configuración del resto de VLAN</em></sub>
 </p>
 
-### 1.6 Verificación de las VLAN
+### 2.6 Verificación de las VLAN
 
 Se ejecuta el comando `show vlan brief` para validar la creación de las VLAN y la asignación de puertos. En la comprobación se detectan algunos errores de configuración (nombres o puertos asignados incorrectamente).
 
@@ -183,7 +178,7 @@ Se ejecuta el comando `show vlan brief` para validar la creación de las VLAN y 
 
 ---
 
-## 2. Despliegue de equipos
+## Práctica 3. Despliegue de equipos
 
 Se corrigen los errores detectados y se vuelve a ejecutar `show vlan brief` para confirmar que el estado de las VLAN y la asignación de puertos son los esperados.
 
@@ -192,18 +187,18 @@ Se corrigen los errores detectados y se vuelve a ejecutar `show vlan brief` para
   <sub><em>Figura 17. show vlan brief tras corregir</em></sub>
 </p>
 
-### 2.1 Inventario de dispositivos
+### 3.1 Inventario de dispositivos
 
 Estos son los dispositivos de los que disponemos y sus características:
 
 | Dispositivo | Tipo | IP | VLAN | Puerto | Estado |
 |:--|:--|:--|:-:|:--|:--|
-| **Proxmox** | Servidor físico | 10.2.10.1/24 | 210 | 11 | 🟢 Conectado |
-| **Linux Mint** | Cliente físico | 10.2.10.2/24 | 210 | 12 | 🟢 Conectado |
-| **Ubuntu Server** | Servidor físico | 10.2.10.3/24 | 210 | Sin asignar | 🟡 No conectado aún |
-| **Switch Cisco** | Gestión | 10.2.99.1/24 | 299 | Puerto de gestión | 🟢 Activo |
+| **Proxmox** | Servidor físico | 10.2.10.1/24 | 210 | 11 | Conectado |
+| **Linux Mint** | Cliente físico | 10.2.10.2/24 | 210 | 12 | Conectado |
+| **Ubuntu Server** | Servidor físico | 10.2.10.3/24 | 210 | Sin asignar | No conectado aún |
+| **Switch Cisco** | Gestión | 10.2.99.1/24 | 299 | Puerto de gestión | Activo |
 
-### 2.2 Segmentación en VLAN
+### 3.2 Segmentación en VLAN
 
 Estas son las VLAN que hemos asignado. Cada una dispone de su propio direccionamiento IP /24 y de una pareja de interfaces del switch:
 
@@ -214,7 +209,7 @@ Estas son las VLAN que hemos asignado. Cada una dispone de su propio direccionam
 | **230** | produccion_mad | 10.2.30.0/24 | 14, 18 |
 | **299** | gestion_mad | 10.2.99.0/24 | 16, 19 |
 
-### 2.3 Asignación de puertos del switch Cisco
+### 3.3 Asignación de puertos del switch Cisco
 
 Esta es la distribución final de los puertos 11 a 20 del switch Cisco, con la VLAN a la que pertenece cada uno y el dispositivo conectado en la actualidad:
 
@@ -231,7 +226,7 @@ Esta es la distribución final de los puertos 11 a 20 del switch Cisco, con la V
 | 19 | 299 | gestion_mad | *Libre* |
 | 20 | Sin asignar | - | *Libre* |
 
-### 2.4 Verificación de conectividad
+### 3.4 Verificación de conectividad
 
 Verificamos que la configuración de red está correctamente configurada y realizamos un `ping` al servidor para comprobar la conectividad entre cliente y servidor dentro de la VLAN 210.
 
