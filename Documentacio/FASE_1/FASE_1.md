@@ -56,10 +56,10 @@ Estas son las VLAN que hemos asignado. Cada una dispone de su propio direccionam
 
 | VLAN | Nombre | Red | Interfaces del switch |
 |:-:|:--|:--|:-:|
-| **210** | servidor_mad | 10.2.10.0/24 | 11, 12 |
-| **220** | comercial_mad | 10.2.20.0/24 | 13, 17 |
-| **230** | produccion_mad | 10.2.30.0/24 | 14, 18 |
-| **299** | gestion_mad | 10.2.99.0/24 | 16, 19 |
+| **210** | servidor_mad | 10.2.10.1/24 | 11, 12 |
+| **220** | comercial_mad | 10.2.20.1/24 | 13, 17 |
+| **230** | produccion_mad | 10.2.30.1/24 | 14, 18 |
+| **299** | gestion_mad | 10.2.99.1/24 | 16, 19 |
 
 **Asignación de puertos del switch Cisco**
 
