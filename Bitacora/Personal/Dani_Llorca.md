@@ -66,3 +66,30 @@
 
 - **d. Qué NO se ha podido conseguir y por qué:**
   - Nada, se ha logrado completar todo el plan de trabajo sin incidencias bloqueantes.
+
+  ---
+
+# Bitácora Personal: Daniel Llorca (Semana 4)
+
+**Fecha:** [2026-11-06]
+
+* **a. Objetivo del día:**
+   * Coordinar al equipo para verificar la conectividad entre el cliente y el servidor mediante `ping`.
+   * Liderar el acceso a la interfaz web de Proxmox, la carga de la imagen ISO y la creación de la máquina virtual Ubuntu Server.
+   * Supervisar el esquema de particionado del servidor según el enunciado (Tarea 1) y la instalación del cliente Linux Mint.
+   * Verificar el almacenamiento de ambos equipos y revisar la documentación del esquema de red.
+* **b. Qué se ha hecho:**
+   * He coordinado la comprobación de conectividad con `ping` entre el cliente y el servidor, y la documentación del esquema de red (dispositivos, VLAN y puertos del switch).
+   * He dirigido el acceso a Proxmox desde el navegador y la carga de la ISO en el almacenamiento del nodo.
+   * He supervisado la creación de la máquina virtual Ubuntu Server (arranque UEFI, 2 núcleos, 4096 MiB de memoria) y el reparto de los discos: `/boot/efi` y `/boot` en el primero, `/` en el segundo, `/home` en el tercero y swap en el cuarto.
+   * He participado en la configuración del nombre del servidor y del usuario.
+   * He coordinado las comprobaciones desde la terminal (`ls /sys`, `df -h` y el contenido de `/etc/fstab`).
+   * He supervisado la creación de la máquina virtual del cliente Linux Mint con sus tres discos, su particionado y la creación del usuario, y la repetición de las comprobaciones (`lsblk` y `/etc/fstab`).
+* **c. Qué se ha podido conseguir:**
+   * Conectividad correcta entre cliente y servidor.
+   * Acceso a Proxmox por navegador y carga de la ISO completada.
+   * Servidor Ubuntu instalado con las particiones planificadas, que se confirman en la salida de `df -h` y en `/etc/fstab`.
+   * Cliente Linux Mint instalado y particionado, con `/boot/efi` y `/boot` en el primer disco, `/` en el segundo y `/home` en el tercero.
+   * Documentación del esquema de red y del particionado completada y revisada.
+* **d. Qué NO se ha podido conseguir y por qué:**
+   * La partición `/boot` del servidor ha quedado en 483 MB y no en 1 GB, como pide el enunciado. El primer disco virtual se creó con 1 GiB, un tamaño insuficiente para una partición EFI de 512 MB más 1 GB de `/boot`. Habría que ampliar ese disco a 2 GiB como mínimo.
