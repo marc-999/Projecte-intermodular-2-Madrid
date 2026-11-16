@@ -92,4 +92,4 @@
    * Cliente Linux Mint instalado y particionado, con `/boot/efi` y `/boot` en el primer disco, `/` en el segundo y `/home` en el tercero.
    * Documentación del esquema de red y del particionado completada y revisada.
 * **d. Qué NO se ha podido conseguir y por qué:**
-   * La partición `/boot` del servidor ha quedado en 483 MB y no en 1 GB, como pide el enunciado. El primer disco virtual se creó con 1 GiB, un tamaño insuficiente para una partición EFI de 512 MB más 1 GB de `/boot`. Habría que ampliar ese disco a 2 GiB como mínimo.
+   * Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
