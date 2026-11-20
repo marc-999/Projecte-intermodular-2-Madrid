@@ -303,7 +303,7 @@ $ cat /etc/fstab
 
 En esta práctica se despliega un servidor **Windows Server 2025** como máquina virtual en Proxmox. Será el nuevo servidor central de la sede de Madrid y, además del almacenamiento para datos corporativos, ofrecerá el servicio **DHCP** para que los clientes obtengan su configuración IP de forma automática.
 
-### 4.1 Planificación de la infraestructura (Tarea 1)
+### 4.1 Planificación de la infraestructura
 
 Antes de crear la máquina se planifican los recursos hardware, el almacenamiento, la red y el nombre del servidor.
 
@@ -363,7 +363,7 @@ El servidor se integra en la VLAN 210 (`servidor_mad`) junto con el resto de equ
 - **Servidor: `WS2025-ASIX02`.** Sigue el formato que pide la práctica (`WS2025-ASIXXX`): indica el sistema operativo (Windows Server 2025), el ciclo y el número de grupo (el 2, el mismo que se usa en el segundo octeto de todas nuestras redes 10.**2**.x.x). Así el equipo se identifica de un vistazo dentro del laboratorio.
 - **Dominio: `madrid.local`.** Hace referencia a la sede del grupo y usa el sufijo `.local`, que no existe en Internet, para que el dominio interno no entre en conflicto con ningún dominio público.
 
-### 4.2 Instalación de Windows Server 2025 (Tarea 2)
+### 4.2 Instalación de Windows Server 2025
 
 Se crea la máquina virtual en el nodo `madrid` con el asistente de Proxmox. En la pestaña **CPU** se asignan 1 zócalo y 2 núcleos, con el tipo de procesador `x86-64-v3`, que expone al invitado las instrucciones modernas que requiere Windows Server 2025.
 
@@ -385,7 +385,7 @@ Una vez dentro, en **Configuración → Sistema → Información** se comprueba 
 
 <p align="center"><img src="Imagenes/paso_16_info_sistema_windows.jpg" alt="Información del sistema" width="500"><br><sub><em>Figura 38. Información del sistema</em></sub></p>
 
-### 4.3 Configuración del almacenamiento (Tarea 3)
+### 4.3 Configuración del almacenamiento
 
 Se abre la herramienta **Administración de discos** con el comando `diskmgmt.msc`. Al detectar los discos 0, 2 y 3 sin inicializar, Windows pide inicializarlos; se seleccionan los tres y se elige el estilo **GPT**.
 
@@ -407,7 +407,7 @@ Después, sobre el espacio no asignado de cada disco se crea un **volumen simple
 - **NTFS.** Permite asignar permisos por usuario y grupo (ACL), imprescindible para unas carpetas que se compartirán en red.
 - **Letras y etiquetas.** Se respetan las letras de la configuración propuesta (`D:` corporativo, `E:` departamental, `F:` copias) y cada volumen se etiqueta con su uso para identificarlo fácilmente.
 
-### 4.4 Configuración TCP/IP del servidor (Tarea 4)
+### 4.4 Configuración TCP/IP del servidor
 
 En las propiedades de **Protocolo de Internet versión 4 (TCP/IPv4)** del adaptador se elige *Usar la siguiente dirección IP* y se asigna la dirección estática **10.2.10.4**, la máscara de subred y, como servidor DNS preferido, **8.8.8.8**. Un servidor necesita una IP fija para que los clientes lo encuentren siempre en la misma dirección, y más aún si va a ofrecer el servicio DHCP.
 
@@ -430,7 +430,7 @@ C:\> ipconfig /all
 
 <p align="center"><img src="Imagenes/paso_21_ipconfig_windows.jpg" alt="Resultado de ipconfig /all en Windows Server" width="500"><br><sub><em>Figura 43. Resultado de ipconfig /all en Windows Server</em></sub></p>
 
-### 4.5 Instalación y configuración del servicio DHCP (Tarea 5)
+### 4.5 Instalación y configuración del servicio DHCP
 
 Desde el **Administrador del servidor** se abre el *Asistente para agregar roles y características* y se marca el rol **Servidor DHCP**. El asistente propone añadir también las herramientas de administración del servidor DHCP, necesarias para gestionarlo, y se aceptan con **Agregar características**.
 
