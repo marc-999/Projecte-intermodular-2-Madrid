@@ -330,7 +330,6 @@ Cada disco tiene una única función, de modo que el sistema, los datos y las co
 | Disco 3 | 50 GB | GPT | `E:` | Departaments | NTFS | Datos departamentales |
 | Disco 0 | 20 GB | GPT | `F:` | Backup | NTFS | Copias de seguridad |
 
-> ℹ️ La numeración de los discos (0–3) es la que asigna Windows según el orden en que Proxmox los presenta, por eso el disco de 20 GB aparece como Disco 0.
 
 **Esquema de red**
 
