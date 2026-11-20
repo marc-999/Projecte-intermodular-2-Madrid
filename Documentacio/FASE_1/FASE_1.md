@@ -30,6 +30,12 @@
   - [3.6 Verificación del almacenamiento en Ubuntu Server](#36-verificación-del-almacenamiento-en-ubuntu-server)
   - [3.7 Despliegue de la máquina virtual cliente Linux Mint](#37-despliegue-de-la-máquina-virtual-cliente-linux-mint)
   - [3.8 Verificación del almacenamiento en Linux Mint](#38-verificación-del-almacenamiento-en-linux-mint)
+- [Práctica 4. Despliegue de servicios con Windows Server](#práctica-4-despliegue-de-servicios-con-windows-server)
+  - [4.1 Planificación de la infraestructura (Tarea 1)](#41-planificación-de-la-infraestructura-tarea-1)
+  - [4.2 Instalación de Windows Server 2025 (Tarea 2)](#42-instalación-de-windows-server-2025-tarea-2)
+  - [4.3 Configuración del almacenamiento (Tarea 3)](#43-configuración-del-almacenamiento-tarea-3)
+  - [4.4 Configuración TCP/IP del servidor (Tarea 4)](#44-configuración-tcpip-del-servidor-tarea-4)
+  - [4.5 Instalación y configuración del servicio DHCP (Tarea 5)](#45-instalación-y-configuración-del-servicio-dhcp-tarea-5)
 
 ---
 
@@ -290,6 +296,169 @@ $ cat /etc/fstab
 ```
 
 <p align="center"><img src="Imagenes/paso_12_fstab_mint.png" alt="Contenido del archivo /etc/fstab en Linux Mint" width="500"><br><sub><em>Figura 33. Contenido del archivo /etc/fstab en Linux Mint</em></sub></p>
+
+---
+
+# Práctica 4. Despliegue de servicios con Windows Server
+
+En esta práctica se despliega un servidor **Windows Server 2025** como máquina virtual en Proxmox. Será el nuevo servidor central de la sede de Madrid y, además del almacenamiento para datos corporativos, ofrecerá el servicio **DHCP** para que los clientes obtengan su configuración IP de forma automática.
+
+### 4.1 Planificación de la infraestructura (Tarea 1)
+
+Antes de crear la máquina se planifican los recursos hardware, el almacenamiento, la red y el nombre del servidor.
+
+**Características de la máquina virtual**
+
+| Componente | Configuración |
+|:--|:--|
+| Sistema operativo | Windows Server 2025 Standard (Evaluation) |
+| Firmware | UEFI (`ovmf`) con chipset Q35 |
+| Procesador | 1 zócalo, 2 núcleos, tipo `x86-64-v3` |
+| Memoria | 8192 MiB (8 GB) |
+| Discos | 4 discos virtuales sobre `local-lvm` (60 GB + 50 GB + 50 GB + 20 GB) |
+| Red | Adaptador Intel E1000 conectado al puente `vmbr0` (VLAN 210) |
+| Imagen de instalación | ISO de Windows Server 2025 en español |
+
+**Esquema de discos y volúmenes**
+
+Cada disco tiene una única función, de modo que el sistema, los datos y las copias de seguridad quedan separados:
+
+| Disco | Tamaño | Estilo | Volumen | Etiqueta | Sistema de ficheros | Uso |
+|:-:|:-:|:-:|:-:|:--|:-:|:--|
+| Disco 1 | 60 GB | GPT | `C:` | *(sistema)* | NTFS | Sistema operativo (+ particiones EFI, MSR y recuperación) |
+| Disco 2 | 50 GB | GPT | `D:` | Corporatiu | NTFS | Recursos compartidos corporativos |
+| Disco 3 | 50 GB | GPT | `E:` | Departaments | NTFS | Datos departamentales |
+| Disco 0 | 20 GB | GPT | `F:` | Backup | NTFS | Copias de seguridad |
+
+> ℹ️ La numeración de los discos (0–3) es la que asigna Windows según el orden en que Proxmox los presenta, por eso el disco de 20 GB aparece como Disco 0.
+
+**Esquema de red**
+
+El servidor se integra en la VLAN 210 (`servidor_mad`) junto con el resto de equipos de la sede. Las direcciones de la .1 a la .4 se reservan para equipos con IP fija y a partir de la .5 se reparten por DHCP:
+
+| Dispositivo | IP | Tipo de asignación |
+|:--|:--|:--|
+| **Proxmox** (host) | 10.2.10.1/24 | Estática |
+| **Linux Mint** (cliente) | 10.2.10.2/24 | Estática |
+| **Ubuntu Server** | 10.2.10.3/24 | Estática |
+| **Windows Server** | 10.2.10.4/24 | Estática |
+| **Clientes DHCP** | 10.2.10.5 – 10.2.10.15 | Dinámica (ámbito DHCP) |
+
+```
+                    Switch Cisco (VLAN 210 · servidor_mad · 10.2.10.0/24)
+                         │                               │
+                     Puerto 11                       Puerto 12
+                         │                               │
+          ┌──────────────┴──────────────┐        Linux Mint (cliente)
+          │  Proxmox VE · 10.2.10.1     │           10.2.10.2
+          │  puente vmbr0               │
+          │   ├─ ubuntuSRV · 10.2.10.3  │
+          │   ├─ linuxmint (VM)         │
+          │   └─ Windows Server · .4    │ ← servidor DHCP (.5 – .15)
+          └─────────────────────────────┘
+```
+
+**Nombre del servidor y del dominio**
+
+- **Servidor: `WS2025-ASIX02`.** Sigue el formato que pide la práctica (`WS2025-ASIXXX`): indica el sistema operativo (Windows Server 2025), el ciclo y el número de grupo (el 2, el mismo que se usa en el segundo octeto de todas nuestras redes 10.**2**.x.x). Así el equipo se identifica de un vistazo dentro del laboratorio.
+- **Dominio: `madrid.local`.** Hace referencia a la sede del grupo y usa el sufijo `.local`, que no existe en Internet, para que el dominio interno no entre en conflicto con ningún dominio público.
+
+### 4.2 Instalación de Windows Server 2025 (Tarea 2)
+
+Se crea la máquina virtual en el nodo `madrid` con el asistente de Proxmox. En la pestaña **CPU** se asignan 1 zócalo y 2 núcleos, con el tipo de procesador `x86-64-v3`, que expone al invitado las instrucciones modernas que requiere Windows Server 2025.
+
+<p align="center"><img src="Imagenes/paso_13a_vm_windows_cpu.jpg" alt="Asistente de creación de la VM: pestaña CPU" width="500"><br><sub><em>Figura 34. Asistente de creación de la VM: pestaña CPU</em></sub></p>
+
+En la pestaña **Memoria** se asignan 8192 MiB, el mínimo exigido por la práctica. El mínimo de memoria también se fija en 8192 MiB, por lo que el *ballooning* no reducirá nunca la RAM de la máquina por debajo de ese valor.
+
+<p align="center"><img src="Imagenes/paso_13b_vm_windows_memoria.jpg" alt="Asistente de creación de la VM: pestaña Memoria" width="500"><br><sub><em>Figura 35. Asistente de creación de la VM: pestaña Memoria</em></sub></p>
+
+Al arrancar el instalador, en la pantalla de selección de ubicación aparecen los cuatro discos. Se instala el sistema en el **Disco 1** (60 GB). Como la máquina arranca en modo UEFI, el instalador crea automáticamente la tabla GPT con la partición de sistema EFI (200 MB), la partición reservada MSR (16 MB) y la partición principal (59,8 GB). Los otros tres discos se dejan sin asignar para configurarlos después.
+
+<p align="center"><img src="Imagenes/paso_14_particiones_windows.jpg" alt="Particiones creadas durante la instalación" width="500"><br><sub><em>Figura 36. Particiones creadas durante la instalación</em></sub></p>
+
+Al terminar la instalación se establece la contraseña del usuario `Administrador` y aparece la pantalla de inicio de sesión.
+
+<p align="center"><img src="Imagenes/paso_15_inicio_sesion_windows.jpg" alt="Pantalla de inicio de sesión de Windows Server" width="500"><br><sub><em>Figura 37. Pantalla de inicio de sesión de Windows Server</em></sub></p>
+
+Una vez dentro, en **Configuración → Sistema → Información** se comprueba que la edición es **Windows Server 2025 Standard Evaluation** (versión 24H2, compilación 26100.32230), con 8 GB de RAM, procesador virtual QEMU y sistema de 64 bits. El equipo conserva todavía el nombre generado automáticamente (`WIN-E283CN95EQG`), que se cambiará por `WS2025-ASIX02` desde el botón **Cambiar el nombre de este equipo**.
+
+<p align="center"><img src="Imagenes/paso_16_info_sistema_windows.jpg" alt="Información del sistema" width="500"><br><sub><em>Figura 38. Información del sistema</em></sub></p>
+
+### 4.3 Configuración del almacenamiento (Tarea 3)
+
+Se abre la herramienta **Administración de discos** con el comando `diskmgmt.msc`. Al detectar los discos 0, 2 y 3 sin inicializar, Windows pide inicializarlos; se seleccionan los tres y se elige el estilo **GPT**.
+
+```
+C:\> diskmgmt.msc
+```
+
+<p align="center"><img src="Imagenes/paso_17_inicializar_discos.jpg" alt="Inicialización de los discos secundarios en GPT" width="500"><br><sub><em>Figura 39. Inicialización de los discos secundarios en GPT</em></sub></p>
+
+Después, sobre el espacio no asignado de cada disco se crea un **volumen simple** con el asistente (botón derecho → *Nuevo volumen simple*), formateado en NTFS, con su letra de unidad y su etiqueta. Al terminar, los tres volúmenes aparecen en la lista en estado *Correcto*: `D:` Corporatiu y `E:` Departaments (49,98 GB cada uno) y `F:` Backup (19,98 GB).
+
+<p align="center"><img src="Imagenes/paso_18_volumenes_creados.jpg" alt="Volúmenes creados en Administración de discos" width="500"><br><sub><em>Figura 40. Volúmenes creados en Administración de discos</em></sub></p>
+
+**Criterios empleados**
+
+- **Un disco por función.** El sistema, los datos y las copias van en discos distintos: si hay que reinstalar Windows, los datos de `D:` y `E:` no se ven afectados, y las copias de `F:` no comparten disco con los datos que protegen.
+- **GPT.** Es el estilo que corresponde a un sistema UEFI y se usa en todos los discos para mantener el mismo criterio que en el disco del sistema.
+- **Volúmenes simples.** Cada volumen ocupa un disco entero, así que no es necesario usar volúmenes distribuidos ni seccionados.
+- **NTFS.** Permite asignar permisos por usuario y grupo (ACL), imprescindible para unas carpetas que se compartirán en red.
+- **Letras y etiquetas.** Se respetan las letras de la configuración propuesta (`D:` corporativo, `E:` departamental, `F:` copias) y cada volumen se etiqueta con su uso para identificarlo fácilmente.
+
+### 4.4 Configuración TCP/IP del servidor (Tarea 4)
+
+En las propiedades de **Protocolo de Internet versión 4 (TCP/IPv4)** del adaptador se elige *Usar la siguiente dirección IP* y se asigna la dirección estática **10.2.10.4**, la máscara de subred y, como servidor DNS preferido, **8.8.8.8**. Un servidor necesita una IP fija para que los clientes lo encuentren siempre en la misma dirección, y más aún si va a ofrecer el servicio DHCP.
+
+<p align="center"><img src="Imagenes/paso_19_ip_estatica_windows.jpg" alt="Configuración IP estática del adaptador" width="500"><br><sub><em>Figura 41. Configuración IP estática del adaptador</em></sub></p>
+
+Para comprobar la conectividad se hace `ping` al host **Proxmox** (10.2.10.1) y al cliente **Linux Mint** (10.2.10.2). Los dos responden sin pérdida de paquetes y con un TTL de 64, valor típico de los sistemas Linux, lo que confirma que el servidor se comunica con el resto de equipos de la VLAN 210.
+
+```
+C:\> ping 10.2.10.1
+C:\> ping 10.2.10.2
+```
+
+<p align="center"><img src="Imagenes/paso_20_ping_windows.jpg" alt="Ping al servidor Proxmox y al cliente Linux Mint" width="500"><br><sub><em>Figura 42. Ping al servidor Proxmox y al cliente Linux Mint</em></sub></p>
+
+Por último, se ejecuta `ipconfig /all`. La salida confirma la configuración aplicada: adaptador Intel PRO/1000 MT, DHCP deshabilitado, dirección IPv4 10.2.10.4 y servidor DNS 8.8.8.8.
+
+```
+C:\> ipconfig /all
+```
+
+<p align="center"><img src="Imagenes/paso_21_ipconfig_windows.jpg" alt="Resultado de ipconfig /all en Windows Server" width="500"><br><sub><em>Figura 43. Resultado de ipconfig /all en Windows Server</em></sub></p>
+
+### 4.5 Instalación y configuración del servicio DHCP (Tarea 5)
+
+Desde el **Administrador del servidor** se abre el *Asistente para agregar roles y características* y se marca el rol **Servidor DHCP**. El asistente propone añadir también las herramientas de administración del servidor DHCP, necesarias para gestionarlo, y se aceptan con **Agregar características**.
+
+<p align="center"><img src="Imagenes/paso_22_rol_dhcp.png" alt="Instalación del rol Servidor DHCP" width="500"><br><sub><em>Figura 44. Instalación del rol Servidor DHCP</em></sub></p>
+
+Una vez instalado el rol, en la consola DHCP se crea un nuevo ámbito IPv4 con el *Asistente para ámbito nuevo*. Primero se le da un nombre y una descripción que indica el rango que reparte.
+
+<p align="center"><img src="Imagenes/paso_23a_ambito_nombre.png" alt="Nombre y descripción del ámbito" width="500"><br><sub><em>Figura 45. Nombre y descripción del ámbito</em></sub></p>
+
+A continuación se define el rango de direcciones, de la **10.2.10.5** a la **10.2.10.15**, con la máscara **255.255.255.0** (/24). El rango empieza en la .5 para no solapar con las IP estáticas de Proxmox, Linux Mint, Ubuntu Server y Windows Server (.1 a .4).
+
+<p align="center"><img src="Imagenes/paso_23b_ambito_rango.png" alt="Rango de direcciones del ámbito" width="500"><br><sub><em>Figura 46. Rango de direcciones del ámbito</em></sub></p>
+
+En un **cliente virtual** configurado para obtener la IP automáticamente se ejecuta `ipconfig /all`. La salida muestra una dirección dentro del rango 10.2.10.5 – 10.2.10.15, el servidor DHCP que la ha concedido (10.2.10.4) y el resto de opciones recibidas.
+
+```
+C:\> ipconfig /all
+```
+
+<p align="center"><img src="Imagenes/paso_24_ipconfig_cliente_virtual.png" alt="ipconfig /all en el cliente virtual" width="500"><br><sub><em>Figura 47. ipconfig /all en el cliente virtual</em></sub></p>
+
+Por último, al **cliente físico** se le asigna siempre la misma dirección mediante una **reserva** en el servidor DHCP, asociada a la dirección MAC de su tarjeta de red. El resultado de `ipconfig /all` muestra que el equipo recibe por DHCP la dirección reservada.
+
+```
+C:\> ipconfig /all
+```
+
+<p align="center"><img src="Imagenes/paso_25_ipconfig_cliente_fisico.png" alt="ipconfig /all en el cliente físico" width="500"><br><sub><em>Figura 48. ipconfig /all en el cliente físico</em></sub></p>
 
 ---
 
