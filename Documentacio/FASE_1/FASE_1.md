@@ -353,7 +353,7 @@ El servidor se integra en la VLAN 210 (`servidor_mad`) junto con el resto de equ
           │  puente vmbr0               │
           │   ├─ ubuntuSRV · 10.2.10.3  │
           │   ├─ linuxmint (VM)         │
-          │   └─ Windows Server · .4    │ ← servidor DHCP (.5 – .15)
+          │   └─ Windows Server · .4    │ ← servidor DHCP (.100 – .200)
           └─────────────────────────────┘
 ```
 
