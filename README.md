@@ -33,7 +33,7 @@ Proyecto intermodular del grupo Madrid (2º ASIX): diseño, despliegue y documen
 
 | Integrante | Rol | Bitácora |
 |:--|:--|:--|
-| Daniel Llorca | Cabeza del proyecto | [Bitácora de Daniel](Bitacora/Personal/Daniel_Llorca.md) |
+| Daniel Llorca | Cabeza del proyecto | [Bitácora de Daniel](Bitacora/Personal/Dani_Llorca.md) |
 | Ismael Cerveró | Secretario | [Bitácora de Ismael](Bitacora/Personal/Ismael_Cervero.md) |
 | Amin Boutighmass | Secretario suplente | [Bitácora de Amin](Bitacora/Personal/Amin_Boutighmass.md) |
 | Marc Sancho | Responsable técnico | [Bitácora de Marc](Bitacora/Personal/Marc_Sancho.md) |
