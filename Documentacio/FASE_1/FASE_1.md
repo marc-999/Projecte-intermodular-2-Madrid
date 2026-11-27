@@ -443,9 +443,11 @@ A continuación se define el rango de direcciones, de la **10.2.10.5** a la **10
 
 <p align="center"><img src="Imagenes/paso_23b_ambito_rango.png" alt="Rango de direcciones del ámbito" width="500"><br><sub><em>Figura 46. Rango de direcciones del ámbito</em></sub></p>
 
-En un **cliente virtual** configurado para obtener la IP automáticamente se ejecuta `ipconfig /all`. La salida muestra una dirección dentro del rango 10.2.10.5 – 10.2.10.15, el servidor DHCP que la ha concedido (10.2.10.4) y el resto de opciones recibidas.
+En un **cliente virtual** configurado para obtener la IP automáticamente se ejecuta `ip a`. La salida muestra una dirección dentro del rango 10.2.10.5 – 10.2.10.15, el servidor DHCP que la ha concedido (10.2.10.4) y el resto de opciones recibidas.
 
 ```
+ip a
+
 ```
 
 <p align="center"><img src="Imagenes/ip_a_Cliente.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 47. ip a en el cliente virtual</em></sub></p>
@@ -453,6 +455,8 @@ En un **cliente virtual** configurado para obtener la IP automáticamente se eje
 Por último, al **cliente físico** se le asigna siempre la misma dirección mediante una **reserva** en el servidor DHCP, asociada a la dirección MAC de su tarjeta de red. El resultado de `ip a` muestra que el equipo recibe por DHCP la dirección reservada.
 
 ```
+ip a
+
 ```
 <p align="center"><img src="Imagenes/ip_a_Clientefísico.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 48. ip a en el cliente virtual</em></sub></p>
 
