@@ -67,29 +67,93 @@
 - **d. Qué NO se ha podido conseguir y por qué:**
   - Nada, se ha logrado completar todo el plan de trabajo sin incidencias bloqueantes.
 
-  ---
+---
 
-# Bitácora Personal: Daniel Llorca (Semana 4)
+## Bitácora Personal: Daniel Llorca (Semana 4)
 
 **Fecha:** [2026-11-06]
 
-* **a. Objetivo del día:**
-   * Coordinar al equipo para verificar la conectividad entre el cliente y el servidor mediante `ping`.
-   * Liderar el acceso a la interfaz web de Proxmox, la carga de la imagen ISO y la creación de la máquina virtual Ubuntu Server.
-   * Supervisar el esquema de particionado del servidor según el enunciado (Tarea 1) y la instalación del cliente Linux Mint.
-   * Verificar el almacenamiento de ambos equipos y revisar la documentación del esquema de red.
-* **b. Qué se ha hecho:**
-   * He coordinado la comprobación de conectividad con `ping` entre el cliente y el servidor, y la documentación del esquema de red (dispositivos, VLAN y puertos del switch).
-   * He dirigido el acceso a Proxmox desde el navegador y la carga de la ISO en el almacenamiento del nodo.
-   * He supervisado la creación de la máquina virtual Ubuntu Server (arranque UEFI, 2 núcleos, 4096 MiB de memoria) y el reparto de los discos: `/boot/efi` y `/boot` en el primero, `/` en el segundo, `/home` en el tercero y swap en el cuarto.
-   * He participado en la configuración del nombre del servidor y del usuario.
-   * He coordinado las comprobaciones desde la terminal (`ls /sys`, `df -h` y el contenido de `/etc/fstab`).
-   * He supervisado la creación de la máquina virtual del cliente Linux Mint con sus tres discos, su particionado y la creación del usuario, y la repetición de las comprobaciones (`lsblk` y `/etc/fstab`).
-* **c. Qué se ha podido conseguir:**
-   * Conectividad correcta entre cliente y servidor.
-   * Acceso a Proxmox por navegador y carga de la ISO completada.
-   * Servidor Ubuntu instalado con las particiones planificadas, que se confirman en la salida de `df -h` y en `/etc/fstab`.
-   * Cliente Linux Mint instalado y particionado, con `/boot/efi` y `/boot` en el primer disco, `/` en el segundo y `/home` en el tercero.
-   * Documentación del esquema de red y del particionado completada y revisada.
-* **d. Qué NO se ha podido conseguir y por qué:**
-   * Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
+- **a. Objetivo del día:**
+  - Coordinar al equipo para verificar la conectividad entre el cliente y el servidor mediante `ping`.
+  - Liderar el acceso a la interfaz web de Proxmox, la carga de la imagen ISO y la creación de la máquina virtual Ubuntu Server.
+  - Supervisar el esquema de particionado del servidor según el enunciado (Tarea 1) y la instalación del cliente Linux Mint.
+  - Verificar el almacenamiento de ambos equipos y revisar la documentación del esquema de red.
+
+- **b. Qué se ha hecho:**
+  - He coordinado la comprobación de conectividad con `ping` entre el cliente y el servidor, y la documentación del esquema de red (dispositivos, VLAN y puertos del switch).
+  - He dirigido el acceso a Proxmox desde el navegador y la carga de la ISO en el almacenamiento del nodo.
+  - He supervisado la creación de la máquina virtual Ubuntu Server (arranque UEFI, 2 núcleos, 4096 MiB de memoria) y el reparto de los discos: `/boot/efi` y `/boot` en el primero, `/` en el segundo, `/home` en el tercero y swap en el cuarto.
+  - He participado en la configuración del nombre del servidor y del usuario.
+  - He coordinado las comprobaciones desde la terminal (`ls /sys`, `df -h` y el contenido de `/etc/fstab`).
+  - He supervisado la creación de la máquina virtual del cliente Linux Mint con sus tres discos, su particionado y la creación del usuario, y la repetición de las comprobaciones (`lsblk` y `/etc/fstab`).
+
+- **c. Qué se ha podido conseguir:**
+  - Conectividad correcta entre cliente y servidor.
+  - Acceso a Proxmox por navegador y carga de la ISO completada.
+  - Servidor Ubuntu instalado con las particiones planificadas, que se confirman en la salida de `df -h` y en `/etc/fstab`.
+  - Cliente Linux Mint instalado y particionado, con `/boot/efi` y `/boot` en el primer disco, `/` en el segundo y `/home` en el tercero.
+  - Documentación del esquema de red y del particionado completada y revisada.
+
+- **d. Qué NO se ha podido conseguir y por qué:**
+  - Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
+
+---
+
+## Bitácora Personal: Daniel Llorca (Semana 5)
+
+**Fecha:** [2026-11-13]
+
+- **a. Objetivo del día:**
+  - Coordinar la planificación inicial de la Práctica 4 (despliegue de servicios con Windows Server 2025), antes de instalar el sistema operativo.
+  - Supervisar la definición de las características de la máquina virtual, el esquema de discos y volúmenes y la configuración de red del servidor.
+  - Dirigir la elección y la justificación del nombre del servidor y del dominio.
+  - Coordinar el esquema de la topología de red, con las máquinas y los puertos del switch Cisco a los que están conectadas.
+
+- **b. Qué se ha hecho:**
+  - He coordinado la lectura del enunciado de la práctica y el reparto de las tareas entre los miembros del equipo.
+  - He dirigido la tabla con las características de la máquina virtual: arranque UEFI, 2 vCPU, 8 GB de RAM, cuatro discos (60, 50, 50 y 20 GB) y adaptador de red en modo puente.
+  - He supervisado el esquema de discos y volúmenes: C: para el sistema, D: para los recursos compartidos, E: para los datos departamentales y F: para las copias de seguridad.
+  - He participado en la definición de la red del servidor: VLAN 210 (10.2.10.0/24), IP estática 10.2.10.11 y DNS 8.8.8.8, además del reparto de direcciones para el futuro ámbito DHCP.
+  - He coordinado la elección del nombre del servidor (`WS2025-ASIX02`) y del dominio (`madrid.local`), con su justificación.
+  - He supervisado el esquema de la topología: el servidor Proxmox con la máquina virtual Windows Server en el puerto 11, el cliente Linux Mint en el puerto 12 y el Ubuntu Server (DHCP fraudulento) en el puerto 15.
+  - He dirigido la lista de comprobaciones previas a la instalación (UEFI, discos, RAM, conectividad e ISO).
+
+- **c. Qué se ha podido conseguir:**
+  - Documento de planificación de la infraestructura completado, con las cuatro evidencias que pide el enunciado.
+  - Esquema de la topología realizado, con las máquinas y los puertos del switch.
+  - Comprobaciones previas definidas, a falta de la instalación de Windows Server en las próximas sesiones.
+
+- **d. Qué NO se ha podido conseguir y por qué:**
+  - Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
+
+---
+
+## Bitácora Personal: Daniel Llorca (Semana 6)
+
+**Fecha:** [2026-11-27]
+
+- **a. Objetivo del día:**
+  - Coordinar la instalación de Windows Server 2025 en modo UEFI/GPT y la configuración de sus discos y volúmenes.
+  - Supervisar la configuración TCP/IP del servidor y la verificación de su conectividad.
+  - Dirigir la instalación y configuración del servicio DHCP, con la reserva de una IP fija para el cliente físico.
+  - Liderar la simulación del servidor DHCP fraudulento en Ubuntu Server y su bloqueo con DHCP Snooping en el switch Cisco.
+
+- **b. Qué se ha hecho:**
+  - He coordinado la creación de la máquina virtual y la instalación de Windows Server 2025 en el disco de 60 GB, con la tabla GPT y las particiones EFI y MSR creadas por el instalador, y el cambio del nombre del equipo a `WS2025-ASIX02`.
+  - He supervisado la inicialización de los discos secundarios en GPT y la creación de los volúmenes NTFS D: (Corporatiu), E: (Departaments) y F: (Backup).
+  - He dirigido la configuración TCP/IP del servidor (IP estática 10.2.10.11 y DNS 8.8.8.8) y las pruebas de conectividad con `ping` al host Proxmox y al cliente Linux Mint.
+  - He coordinado la instalación del rol Servidor DHCP, la creación del ámbito (10.2.10.100 - 10.2.10.200) y la comprobación con un cliente virtual, además de la reserva de IP para el cliente físico.
+  - He supervisado el esquema de la topología: Proxmox con la máquina virtual Windows Server en el puerto 11, Linux Mint en el 12 y el Ubuntu Server en el 15, todos en la VLAN 210.
+  - He dirigido el despliegue del servidor DHCP fraudulento en Ubuntu Server (`isc-dhcp-server`, con rango, puerta de enlace y dominio erróneos a propósito) y la prueba en la que los clientes recibían sus direcciones.
+  - He coordinado la activación de DHCP Snooping en la VLAN 210, con la interfaz `GigabitEthernet 0/11` como única *trusted*, y su verificación con `show ip dhcp snooping` y `show ip dhcp snooping statistics`.
+  - He participado en las pruebas desde los clientes antes y después de activar la protección.
+
+- **c. Qué se ha podido conseguir:**
+  - Windows Server 2025 instalado y operativo en UEFI/GPT, con el nombre `WS2025-ASIX02`.
+  - Discos configurados y accesibles (D:, E: y F:).
+  - Servidor accesible desde la red y servicio DHCP funcionando, con los clientes recibiendo su IP automáticamente.
+  - Servidor DHCP fraudulento comprobado y bloqueado: tras activar DHCP Snooping, el cliente recibe la configuración del Windows Server.
+  - Documento de la Fase 1 completado con las Prácticas 2, 3 y 4.
+
+- **d. Qué NO se ha podido conseguir y por qué:**
+  - Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
