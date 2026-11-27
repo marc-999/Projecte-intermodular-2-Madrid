@@ -37,6 +37,10 @@
   - [4.4 Configuración TCP/IP del servidor (Tarea 4)](#44-configuración-tcpip-del-servidor-tarea-4)
   - [4.5 Instalación y configuración del servicio DHCP (Tarea 5)](#45-instalación-y-configuración-del-servicio-dhcp-tarea-5)
   - [4.6 Esquema de la topología (Tarea 6)](#46-esquema-de-la-topología-tarea-6)
+  - [4.7 Servidor DHCP fraudulento en Ubuntu Server (Tarea 6)](#47-servidor-dhcp-fraudulento-en-ubuntu-server-tarea-6)
+  - [4.8 Configuración de DHCP Snooping en el switch Cisco (Tarea 6)](#48-configuración-de-dhcp-snooping-en-el-switch-cisco-tarea-6)
+  - [4.9 Verificación de DHCP Snooping (Tarea 6)](#49-verificación-de-dhcp-snooping-tarea-6)
+  - [4.10 Pruebas desde los clientes (Tarea 6)](#410-pruebas-desde-los-clientes-tarea-6)
 
 ---
 
@@ -460,6 +464,7 @@ En un **cliente virtual** configurado para obtener la IP automáticamente se eje
 ip a
 ```
 
+> ⚠️ **Nota:** la captura muestra la configuración anterior (servidor DHCP 10.2.10.4 y rango 10.2.10.5 – 10.2.10.15). Se cambió a **10.2.10.11** y **10.2.10.100 – 10.2.10.200** para el funcionamiento correcto y no tenemos capturas actualizadas.
 
 <p align="center"><img src="Imagenes/ip_a_Cliente.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 47. ip a en el cliente virtual</em></sub></p>
 
@@ -468,6 +473,7 @@ Por último, al **cliente físico** se le asigna siempre la misma dirección med
 ```
 ip a
 ```
+> ⚠️ **Nota:** la captura muestra la configuración anterior (servidor DHCP 10.2.10.4 y rango 10.2.10.5 – 10.2.10.15). Se cambió a **10.2.10.11** y **10.2.10.100 – 10.2.10.200** para el funcionamiento correcto y no tenemos capturas actualizadas.
 
 <p align="center"><img src="Imagenes/ip_a_Clientefísico.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 48. ip a en el cliente virtual</em></sub></p>
 
@@ -509,6 +515,95 @@ Switch(config-if)# switchport access vlan 210
 ```
 
 El servidor Windows es una máquina virtual dentro de Proxmox, así que sus respuestas DHCP entran al switch por el **puerto 11**. Por eso este es el único puerto que se marca como *trusted*. Los puertos 12 y 15 quedan como *untrusted*: el switch descartará las respuestas DHCP que entren por ellos, como las del Ubuntu Server fraudulento.
+
+### 4.7 Servidor DHCP fraudulento en Ubuntu Server
+
+En el Ubuntu Server físico se instala el servicio **isc-dhcp-server** y se configura un ámbito de pruebas en el archivo `/etc/dhcp/dhcpd.conf`. La configuración es incorrecta a propósito, para comprobar después qué recibe un cliente si este servidor le responde:
+
+| Parámetro | Valor | Comentario |
+|:--|:--|:--|
+| Red | 10.2.10.0/24 | La misma red que los clientes |
+| Rango | 10.2.10.201 – 10.2.10.220 | Fuera del rango del Windows Server, para distinguir quién ha dado la IP |
+| Puerta de enlace | 10.2.20.254 | **Errónea**: pertenece a otra red |
+| DNS | 8.8.8.8 | - |
+| Dominio | `rogue.local` | **Erróneo**: no es nuestro dominio |
+
+```
+$ sudo nano /etc/dhcp/dhcpd.conf
+$ sudo systemctl restart isc-dhcp-server
+```
+
+<p align="center"><img src="Imagenes/paso_24_config_dhcp_rogue.png" alt="Configuración del ámbito DHCP fraudulento en Ubuntu Server" width="500"><br><sub><em>Figura 49. Configuración del ámbito DHCP fraudulento en Ubuntu Server</em></sub></p>
+
+### 4.8 Configuración de DHCP Snooping en el switch Cisco
+
+Se accede al switch por Telnet y se activa DHCP Snooping de forma global y para la VLAN 210. Se desactiva la inserción de la opción 82, ya que el servidor Windows no la necesita y podría rechazar las peticiones. Después se marca como *trusted* únicamente la interfaz `GigabitEthernet 0/11`, que es el puerto del host Proxmox por el que entran las respuestas del Windows Server. El resto de puertos se quedan como *untrusted*, que es el valor por defecto, así que no hay que configurarlos. Por último, se guarda la configuración.
+
+```
+Switch(config)# ip dhcp snooping
+Switch(config)# ip dhcp snooping vlan 210
+Switch(config)# no ip dhcp snooping information option
+Switch(config)# interface GigabitEthernet 0/11
+Switch(config-if)# ip dhcp snooping trust
+Switch(config-if)# end
+Switch# write memory
+```
+
+<p align="center"><img src="Imagenes/paso_25_config_snooping.png" alt="Activación de DHCP Snooping y puerto trusted" width="500"><br><sub><em>Figura 50. Activación de DHCP Snooping y puerto trusted</em></sub></p>
+
+### 4.9 Verificación de DHCP Snooping
+
+Se ejecuta `show ip dhcp snooping`. La salida confirma que DHCP Snooping está activado y operativo en la VLAN 210, que la opción 82 está desactivada y que la única interfaz *trusted* es `GigabitEthernet0/11`. Como el resto de puertos no aparecen en la lista, son *untrusted*.
+
+```
+Switch# show ip dhcp snooping
+```
+
+<p align="center"><img src="Imagenes/paso_26_show_dhcp_snooping.png" alt="Resultado de show ip dhcp snooping" width="500"><br><sub><em>Figura 51. Resultado de show ip dhcp snooping</em></sub></p>
+
+Con `show ip dhcp snooping statistics` se ven los paquetes DHCP que ha procesado el switch: 43 reenviados y 12 descartados.
+
+```
+Switch# show ip dhcp snooping statistics
+```
+
+<p align="center"><img src="Imagenes/paso_27_snooping_statistics.jpg" alt="Resultado de show ip dhcp snooping statistics" width="500"><br><sub><em>Figura 52. Resultado de show ip dhcp snooping statistics</em></sub></p>
+
+### 4.10 Pruebas desde los clientes
+
+**Antes de activar DHCP Snooping**
+
+Con el Ubuntu Server fraudulento encendido y sin protección en el switch, los clientes reciben la configuración del servidor no autorizado. En la máquina virtual **ubuntuSRV** se ejecuta `ip a` y se ve que ha recibido la **10.2.10.202**, del rango del servidor fraudulento.
+
+```
+ip a
+```
+
+<p align="center"><img src="Imagenes/paso_28a_ip_ubuntusrv_rogue.jpg" alt="ip a en ubuntuSRV: IP del servidor fraudulento" width="500"><br><sub><em>Figura 53. ip a en ubuntuSRV: IP del servidor fraudulento</em></sub></p>
+
+Lo mismo ocurre en la máquina virtual **Linux Mint**, que recibe la **10.2.10.201**.
+
+<p align="center"><img src="Imagenes/paso_28b_ip_mint_rogue.jpg" alt="ip a en Linux Mint: IP del servidor fraudulento" width="500"><br><sub><em>Figura 54. ip a en Linux Mint: IP del servidor fraudulento</em></sub></p>
+
+En el servidor fraudulento, el archivo `/var/lib/dhcp/dhcpd.leases` confirma que ha concedido las dos direcciones: la .201 a `mintmadrid` y la .202 a `srv-ubuntu`, con las mismas MAC que muestran los clientes.
+
+```
+$ cat /var/lib/dhcp/dhcpd.leases
+```
+
+<p align="center"><img src="Imagenes/paso_28c_leases_rogue.png" alt="Concesiones del servidor DHCP fraudulento" width="500"><br><sub><em>Figura 55. Concesiones del servidor DHCP fraudulento</em></sub></p>
+
+**Después de activar DHCP Snooping**
+
+Una vez activado DHCP Snooping, se vuelve a pedir la IP en los clientes. **ubuntuSRV** recibe ahora la **10.2.10.101**, del rango del Windows Server (.100 – .200), con una concesión de 8 días (691199 s), que es la duración por defecto del DHCP de Windows. Linux Mint todavía muestra la .201 porque la concesión anterior del servidor fraudulento aún no había caducado.
+
+```
+ip a
+```
+
+<p align="center"><img src="Imagenes/paso_29_ip_clientes_snooping.png" alt="ip a en los clientes tras activar DHCP Snooping" width="500"><br><sub><em>Figura 56. ip a en los clientes tras activar DHCP Snooping</em></sub></p>
+
+El switch descarta las respuestas DHCP que llegan por los puertos *untrusted*, así que el servidor fraudulento ya no puede dar configuración a los clientes, mientras que las respuestas del Windows Server, que entran por el puerto 11 (*trusted*), siguen llegando.
 
 ---
 
