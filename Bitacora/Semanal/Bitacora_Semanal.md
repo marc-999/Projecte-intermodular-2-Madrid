@@ -84,7 +84,7 @@
 
 ---
 
-## Semana 6 (Práctica 4: Despliegue de servicios con Windows Server)
+## Semana 6
 
 * **(a) Objetivo general del grupo:**
   * Elaborar el documento de planificación de la infraestructura (recursos de la máquina virtual, esquema de discos y volúmenes, esquema de red y justificación del nombre del servidor y del dominio).
@@ -99,7 +99,7 @@
 
 ---
 
-## Semana 7 (Práctica 4: DHCP y DHCP Snooping)
+## Semana 7
 
 * **(a) Objetivo general del grupo:**
   * Instalar el rol de servidor DHCP en Windows Server 2025, completar la configuración posterior a la instalación y autorizar el servidor en Active Directory (si forma parte del dominio).
