@@ -36,6 +36,7 @@
   - [4.3 Configuración del almacenamiento (Tarea 3)](#43-configuración-del-almacenamiento-tarea-3)
   - [4.4 Configuración TCP/IP del servidor (Tarea 4)](#44-configuración-tcpip-del-servidor-tarea-4)
   - [4.5 Instalación y configuración del servicio DHCP (Tarea 5)](#45-instalación-y-configuración-del-servicio-dhcp-tarea-5)
+  - [4.6 Esquema de la topología (Tarea 6)](#46-esquema-de-la-topología-tarea-6)
 
 ---
 
@@ -333,28 +334,28 @@ Cada disco tiene una única función, de modo que el sistema, los datos y las co
 
 **Esquema de red**
 
-El servidor se integra en la VLAN 210 (`servidor_mad`) junto con el resto de equipos de la sede. Las direcciones de la .1 a la .4 se reservan para equipos con IP fija y a partir de la .5 se reparten por DHCP:
+El servidor se integra en la VLAN 210 (`servidor_mad`) junto con el resto de equipos de la sede. Las direcciones por debajo de la .100 se reservan para equipos con IP fija y de la .100 a la .200 se reparten por DHCP:
 
 | Dispositivo | IP | Tipo de asignación |
 |:--|:--|:--|
 | **Proxmox** (host) | 10.2.10.1/24 | Estática |
 | **Linux Mint** (cliente) | 10.2.10.2/24 | Estática |
 | **Ubuntu Server** | 10.2.10.3/24 | Estática |
-| **Windows Server** | 10.2.10.4/24 | Estática |
-| **Clientes DHCP** | 10.2.10.5 – 10.2.10.15 | Dinámica (ámbito DHCP) |
+| **Windows Server** | 10.2.10.11/24 | Estática |
+| **Clientes DHCP** | 10.2.10.100 – 10.2.10.200 | Dinámica (ámbito DHCP) |
 
 ```
                     Switch Cisco (VLAN 210 · servidor_mad · 10.2.10.0/24)
-                         │                               │
-                     Puerto 11                       Puerto 12
-                         │                               │
-          ┌──────────────┴──────────────┐        Linux Mint (cliente)
-          │  Proxmox VE · 10.2.10.1     │           10.2.10.2
-          │  puente vmbr0               │
-          │   ├─ ubuntuSRV · 10.2.10.3  │
-          │   ├─ linuxmint (VM)         │
-          │   └─ Windows Server 10.2.10.11    │ ← servidor DHCP (.100 – .200)
-          └─────────────────────────────┘
+                         │                                      │
+                     Puerto 11                              Puerto 12
+                         │                                      │
+          ┌──────────────┴─────────────────────┐        Linux Mint (cliente)
+          │  Proxmox VE · 10.2.10.1            │           10.2.10.2
+          │  puente vmbr0                      │
+          │   ├─ ubuntuSRV · 10.2.10.3         │
+          │   ├─ linuxmint (VM)                │
+          │   └─ Windows Server · 10.2.10.11   │ ← servidor DHCP (.100 – .200)
+          └────────────────────────────────────┘
 ```
 
 **Nombre del servidor y del dominio**
@@ -408,7 +409,9 @@ Después, sobre el espacio no asignado de cada disco se crea un **volumen simple
 
 ### 4.4 Configuración TCP/IP del servidor
 
-En las propiedades de **Protocolo de Internet versión 4 (TCP/IPv4)** del adaptador se elige *Usar la siguiente dirección IP* y se asigna la dirección estática **10.2.10.4**, la máscara de subred y, como servidor DNS preferido, **8.8.8.8**. Un servidor necesita una IP fija para que los clientes lo encuentren siempre en la misma dirección, y más aún si va a ofrecer el servicio DHCP.
+En las propiedades de **Protocolo de Internet versión 4 (TCP/IPv4)** del adaptador se elige *Usar la siguiente dirección IP* y se asigna la dirección estática **10.2.10.11**, la máscara de subred y, como servidor DNS preferido, **8.8.8.8**. Un servidor necesita una IP fija para que los clientes lo encuentren siempre en la misma dirección, y más aún si va a ofrecer el servicio DHCP.
+
+> ⚠️ **Nota:** la captura muestra la configuración anterior (10.2.10.4). La IP del servidor se cambió a **10.2.10.11** para el funcionamiento correcto y no tenemos capturas actualizadas.
 
 <p align="center"><img src="Imagenes/paso_19_ip_estatica_windows.jpg" alt="Configuración IP estática del adaptador" width="500"><br><sub><em>Figura 41. Configuración IP estática del adaptador</em></sub></p>
 
@@ -419,13 +422,17 @@ C:\> ping 10.2.10.1
 C:\> ping 10.2.10.2
 ```
 
+> ⚠️ **Nota:** la captura muestra la configuración anterior (10.2.10.4). La IP del servidor se cambió a **10.2.10.11** para el funcionamiento correcto y no tenemos capturas actualizadas.
+
 <p align="center"><img src="Imagenes/paso_20_ping_windows.jpg" alt="Ping al servidor Proxmox y al cliente Linux Mint" width="500"><br><sub><em>Figura 42. Ping al servidor Proxmox y al cliente Linux Mint</em></sub></p>
 
-Por último, se ejecuta `ipconfig /all`. La salida confirma la configuración aplicada: adaptador Intel PRO/1000 MT, DHCP deshabilitado, dirección IPv4 10.2.10.4 y servidor DNS 8.8.8.8.
+Por último, se ejecuta `ipconfig /all`. La salida confirma la configuración aplicada: adaptador Intel PRO/1000 MT, DHCP deshabilitado, dirección IPv4 10.2.10.11 y servidor DNS 8.8.8.8.
 
 ```
 C:\> ipconfig /all
 ```
+
+> ⚠️ **Nota:** la captura muestra la configuración anterior (10.2.10.4). La IP del servidor se cambió a **10.2.10.11** para el funcionamiento correcto y no tenemos capturas actualizadas.
 
 <p align="center"><img src="Imagenes/paso_21_ipconfig_windows.jpg" alt="Resultado de ipconfig /all en Windows Server" width="500"><br><sub><em>Figura 43. Resultado de ipconfig /all en Windows Server</em></sub></p>
 
@@ -437,17 +444,22 @@ Desde el **Administrador del servidor** se abre el *Asistente para agregar roles
 
 Una vez instalado el rol, en la consola DHCP se crea un nuevo ámbito IPv4 con el *Asistente para ámbito nuevo*. Primero se le da un nombre y una descripción que indica el rango que reparte.
 
+> ⚠️ **Nota:** la captura muestra el rango anterior (10.2.10.5 – 10.2.10.15). El rango se cambió a **10.2.10.100 – 10.2.10.200** para el funcionamiento correcto y no tenemos capturas actualizadas.
+
 <p align="center"><img src="Imagenes/paso_23a_ambito_nombre.png" alt="Nombre y descripción del ámbito" width="500"><br><sub><em>Figura 45. Nombre y descripción del ámbito</em></sub></p>
 
-A continuación se define el rango de direcciones, de la **10.2.10.5** a la **10.2.10.15**, con la máscara **255.255.255.0** (/24). El rango empieza en la .5 para no solapar con las IP estáticas de Proxmox, Linux Mint, Ubuntu Server y Windows Server (.1 a .4).
+A continuación se define el rango de direcciones, de la **10.2.10.100** a la **10.2.10.200**, con la máscara **255.255.255.0** (/24). El rango empieza en la .100 para no solapar con las IP estáticas de Proxmox, Linux Mint, Ubuntu Server y Windows Server (.1, .2, .3 y .11).
+
+> ⚠️ **Nota:** la captura muestra el rango anterior (10.2.10.5 – 10.2.10.15). El rango se cambió a **10.2.10.100 – 10.2.10.200** para el funcionamiento correcto y no tenemos capturas actualizadas.
 
 <p align="center"><img src="Imagenes/paso_23b_ambito_rango.png" alt="Rango de direcciones del ámbito" width="500"><br><sub><em>Figura 46. Rango de direcciones del ámbito</em></sub></p>
 
-En un **cliente virtual** configurado para obtener la IP automáticamente se ejecuta `ip a`. La salida muestra una dirección dentro del rango 10.2.10.5 – 10.2.10.15, el servidor DHCP que la ha concedido (10.2.10.4) y el resto de opciones recibidas.
+En un **cliente virtual** configurado para obtener la IP automáticamente se ejecuta `ip a`. La salida muestra una dirección dentro del rango 10.2.10.100 – 10.2.10.200, el servidor DHCP que la ha concedido (10.2.10.11) y el resto de opciones recibidas.
 
 ```
 ip a
 ```
+
 
 <p align="center"><img src="Imagenes/ip_a_Cliente.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 47. ip a en el cliente virtual</em></sub></p>
 
@@ -456,7 +468,47 @@ Por último, al **cliente físico** se le asigna siempre la misma dirección med
 ```
 ip a
 ```
+
 <p align="center"><img src="Imagenes/ip_a_Clientefísico.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 48. ip a en el cliente virtual</em></sub></p>
+
+### 4.6 Esquema de la topología
+
+Antes de activar DHCP Snooping se define qué máquinas hay en la red y a qué puerto del switch Cisco está conectada cada una. Todas están en la VLAN 210 (`servidor_mad`, 10.2.10.0/24). El servidor Ubuntu Server físico, que hará de servidor DHCP fraudulento, se conecta al puerto 15, que se añade a la VLAN 210.
+
+```
+Switch(config)# interface GigabitEthernet 0/15
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan 210
+```
+
+**Máquinas y puertos**
+
+| Puerto | VLAN | Dispositivo conectado | IP | Función | DHCP Snooping |
+|:-:|:-:|:--|:--|:--|:-:|
+| 11 | 210 | **Proxmox** (host) | 10.2.10.1/24 | Hipervisor. Por este puerto sale el tráfico de sus máquinas virtuales | **Trusted** |
+| ↳ | 210 | **Windows Server** (VM) | 10.2.10.11/24 | Servidor DHCP legítimo | - |
+| ↳ | 210 | **Cliente virtual** (VM) | 10.2.10.100 – 10.2.10.200 | Cliente DHCP | - |
+| 12 | 210 | **Linux Mint** (cliente físico) | Reserva DHCP (10.2.10.100 – 10.2.10.200) | Cliente DHCP | Untrusted |
+| 15 | 210 | **Ubuntu Server** (físico) | 10.2.10.3/24 | Servidor DHCP fraudulento | Untrusted |
+
+```
+                 Switch Cisco (VLAN 210 · servidor_mad · 10.2.10.0/24)
+                 │                        │                         │
+            Puerto 11                 Puerto 12                 Puerto 15
+            [TRUSTED]                [UNTRUSTED]               [UNTRUSTED]
+                 │                        │                         │
+  ┌──────────────┴───────────────┐  Linux Mint            Ubuntu Server
+  │  Proxmox VE · 10.2.10.1      │  (cliente físico)      (físico) · 10.2.10.3
+  │  puente vmbr0                │  Reserva DHCP          DHCP fraudulento
+  │                              │  (.100 – .200)
+  │   ├─ Windows Server          │
+  │   │   10.2.10.11 · DHCP      │
+  │   └─ Cliente virtual         │
+  │      10.2.10.100 – .200 DHCP │
+  └──────────────────────────────┘
+```
+
+El servidor Windows es una máquina virtual dentro de Proxmox, así que sus respuestas DHCP entran al switch por el **puerto 11**. Por eso este es el único puerto que se marca como *trusted*. Los puertos 12 y 15 quedan como *untrusted*: el switch descartará las respuestas DHCP que entren por ellos, como las del Ubuntu Server fraudulento.
 
 ---
 
