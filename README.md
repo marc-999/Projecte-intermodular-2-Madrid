@@ -62,7 +62,7 @@ Proyecto intermodular del grupo Madrid (2º ASIX): diseño, despliegue y documen
 
 - [x] **Práctica 2.** Proxmox VE, switch Cisco y VLAN
 - [x] **Práctica 3.** Ubuntu Server y Linux Mint sobre Proxmox
-- [x] **Práctica 4.** Windows Server 2025 y servicio DHCP
+- [x] **Práctica 4.** Windows Server 2025, servicio DHCP y DHCP Snooping
 
 ## <img src="assets/icons/tools.svg" width="24" height="24" alt=""> Herramientas
 
