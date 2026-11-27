@@ -68,31 +68,93 @@
 
 - **d. Qué NO se ha podido conseguir y por qué:**
   - Nada, se ha logrado completar todo el trabajo previsto y documentarlo sin bloqueos.
-  
+
 ---
 
-  # Bitácora Personal: Ismael Cervero (Semana 4)
+## Bitácora Personal: Ismael Cervero (Semana 4)
 
 **Fecha:** [2026-11-06]
 
-* **a. Objetivo del día:**
-   * Documentar la comprobación de conectividad entre el cliente y el servidor mediante `ping`.
-   * Registrar el acceso a la interfaz web de Proxmox, la carga de la imagen ISO y la creación de la máquina virtual Ubuntu Server.
-   * Documentar el esquema de red (dispositivos, VLAN y puertos del switch) y la planificación del particionado según el enunciado (Tarea 1).
-   * Colaborar en la instalación del cliente Linux Mint y registrar las comprobaciones de almacenamiento de ambos equipos.
-* **b. Qué se ha hecho:**
-   * He documentado la verificación de conectividad con `ping` entre el cliente y el servidor.
-   * He redactado el esquema de red, recogiendo en tablas los dispositivos, las VLAN y la asignación de los puertos del switch.
-   * He registrado el acceso a Proxmox desde el navegador y la carga de la ISO en el almacenamiento del nodo.
-   * He tomado notas de la creación de la máquina virtual Ubuntu Server (arranque UEFI, 2 núcleos, 4096 MiB de memoria) y de la tabla de particionado del servidor: `/boot/efi` y `/boot` en el primer disco, `/` en el segundo, `/home` en el tercero y swap en el cuarto.
-   * He documentado la configuración del nombre del servidor y del usuario, y las comprobaciones desde la terminal (`ls /sys`, `df -h` y el contenido de `/etc/fstab`).
-   * He colaborado en la creación de la máquina virtual del cliente Linux Mint y he registrado su particionado, la creación del usuario y las comprobaciones (`lsblk` y `/etc/fstab`).
-   * He participado en la redacción final de la documentación de la práctica.
-* **c. Qué se ha podido conseguir:**
-   * Conectividad correcta entre cliente y servidor, debidamente documentada.
-   * Acceso a Proxmox por navegador y carga de la ISO registrados paso a paso.
-   * Servidor Ubuntu instalado con las particiones planificadas, y verificación documentada con `df -h` y `/etc/fstab`.
-   * Cliente Linux Mint instalado y particionado, con sus comprobaciones registradas.
-   * Documentación del esquema de red y del particionado completada y revisada.
-* **d. Qué NO se ha podido conseguir y por qué:**
-   * Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
+- **a. Objetivo del día:**
+  - Documentar la comprobación de conectividad entre el cliente y el servidor mediante `ping`.
+  - Registrar el acceso a la interfaz web de Proxmox, la carga de la imagen ISO y la creación de la máquina virtual Ubuntu Server.
+  - Documentar el esquema de red (dispositivos, VLAN y puertos del switch) y la planificación del particionado según el enunciado (Tarea 1).
+  - Colaborar en la instalación del cliente Linux Mint y registrar las comprobaciones de almacenamiento de ambos equipos.
+
+- **b. Qué se ha hecho:**
+  - He documentado la verificación de conectividad con `ping` entre el cliente y el servidor.
+  - He redactado el esquema de red, recogiendo en tablas los dispositivos, las VLAN y la asignación de los puertos del switch.
+  - He registrado el acceso a Proxmox desde el navegador y la carga de la ISO en el almacenamiento del nodo.
+  - He tomado notas de la creación de la máquina virtual Ubuntu Server (arranque UEFI, 2 núcleos, 4096 MiB de memoria) y de la tabla de particionado del servidor: `/boot/efi` y `/boot` en el primer disco, `/` en el segundo, `/home` en el tercero y swap en el cuarto.
+  - He documentado la configuración del nombre del servidor y del usuario, y las comprobaciones desde la terminal (`ls /sys`, `df -h` y el contenido de `/etc/fstab`).
+  - He colaborado en la creación de la máquina virtual del cliente Linux Mint y he registrado su particionado, la creación del usuario y las comprobaciones (`lsblk` y `/etc/fstab`).
+  - He participado en la redacción final de la documentación de la práctica.
+
+- **c. Qué se ha podido conseguir:**
+  - Conectividad correcta entre cliente y servidor, debidamente documentada.
+  - Acceso a Proxmox por navegador y carga de la ISO registrados paso a paso.
+  - Servidor Ubuntu instalado con las particiones planificadas, y verificación documentada con `df -h` y `/etc/fstab`.
+  - Cliente Linux Mint instalado y particionado, con sus comprobaciones registradas.
+  - Documentación del esquema de red y del particionado completada y revisada.
+
+- **d. Qué NO se ha podido conseguir y por qué:**
+  - Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
+
+---
+
+## Bitácora Personal: Ismael Cervero (Semana 5)
+
+**Fecha:** [2026-11-13]
+
+- **a. Objetivo del día:**
+  - Documentar la planificación inicial de la Práctica 4 (despliegue de servicios con Windows Server 2025), antes de instalar el sistema operativo.
+  - Registrar las características de la máquina virtual, el esquema de discos y volúmenes y la configuración de red del servidor.
+  - Redactar la justificación del nombre del servidor y del dominio.
+  - Documentar el esquema de la topología, con las máquinas y los puertos del switch Cisco.
+
+- **b. Qué se ha hecho:**
+  - He leído el enunciado y anotado las tareas y las evidencias que pide cada una, para organizar la documentación de la práctica.
+  - He redactado la tabla con las características de la máquina virtual: arranque UEFI, 2 vCPU, 8 GB de RAM, cuatro discos (60, 50, 50 y 20 GB) y adaptador de red en modo puente.
+  - He documentado el esquema de discos y volúmenes: C: para el sistema, D: para los recursos compartidos, E: para los datos departamentales y F: para las copias de seguridad.
+  - He registrado la configuración de red del servidor (VLAN 210, IP estática 10.2.10.11 y DNS 8.8.8.8) y el reparto de direcciones para el futuro ámbito DHCP.
+  - He redactado la justificación del nombre del servidor (`WS2025-ASIX02`) y del dominio (`madrid.local`).
+  - He documentado el esquema de la topología: Proxmox con la máquina virtual Windows Server en el puerto 11, Linux Mint en el 12 y Ubuntu Server en el 15.
+  - He anotado las comprobaciones previas a la instalación (UEFI, discos, RAM, conectividad e ISO).
+
+- **c. Qué se ha podido conseguir:**
+  - Documento de planificación completado, con las cuatro evidencias que pide el enunciado.
+  - Esquema de la topología documentado, con las máquinas y los puertos del switch.
+  - Estructura de la documentación de la práctica preparada para ir añadiendo el resto de tareas.
+
+- **d. Qué NO se ha podido conseguir y por qué:**
+  - Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
+
+---
+
+## Bitácora Personal: Ismael Cervero (Semana 6)
+
+**Fecha:** [2026-11-27]
+
+- **a. Objetivo del día:**
+  - Documentar la instalación de Windows Server 2025, la configuración de sus discos y de su red.
+  - Registrar la instalación y configuración del servicio DHCP.
+  - Documentar la simulación del servidor DHCP fraudulento y su bloqueo con DHCP Snooping, con las pruebas antes y después.
+  - Preparar la entrega de la práctica: documento de la Fase 1, README y repositorio.
+
+- **b. Qué se ha hecho:**
+  - He documentado la instalación de Windows Server 2025 (arranque UEFI, tabla GPT y particiones EFI y MSR) y el cambio del nombre del equipo a `WS2025-ASIX02`.
+  - He registrado la creación de los volúmenes D: (Corporatiu), E: (Departaments) y F: (Backup), con los criterios usados: un disco por función, GPT y NTFS.
+  - He documentado la configuración TCP/IP del servidor y las pruebas de conectividad con `ping` y `ipconfig /all`.
+  - He registrado la instalación del rol DHCP, la creación del ámbito (10.2.10.100 - 10.2.10.200) y la reserva de IP para el cliente físico.
+  - He documentado la configuración del servidor DHCP fraudulento en Ubuntu Server y las pruebas en las que los clientes recibían sus direcciones.
+  - He registrado la configuración de DHCP Snooping (VLAN 210 y `GigabitEthernet 0/11` como única *trusted*) y la salida de `show ip dhcp snooping` y `show ip dhcp snooping statistics`.
+  - He añadido notas en la documentación en las capturas que muestran la configuración anterior (IP 10.2.10.4 y rango antiguo del ámbito).
+  - He preparado la entrega: actualización del documento de la Fase 1 y del README, y el commit en el repositorio con el nombre de la práctica.
+
+- **c. Qué se ha podido conseguir:**
+  - Documentación de la Práctica 4 completada, con todas las tareas, capturas y justificaciones.
+  - Documento general de la Fase 1 en PDF preparado y enlazado desde el README.
+  - Práctica lista para la entrega.
+
+- **d. Qué NO se ha podido conseguir y por qué:**
+  - Nada, ya que se han resuelto con éxito todos los objetivos planificados para la sesión.
