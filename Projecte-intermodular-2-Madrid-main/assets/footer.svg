@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="120" viewBox="0 0 1280 120" role="presentation">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5E0718"/><stop offset="0.55" stop-color="#A6112E"/><stop offset="1" stop-color="#C62240"/></linearGradient></defs>
+  <path d="M0 50 C 220 10, 420 90, 640 50 S 1060 10, 1280 50 V120 H0 Z" fill="url(#g)"/>
+  <path d="M0 70 C 240 30, 420 110, 640 70 S 1040 30, 1280 70" fill="none" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="2"/>
+  <g transform="translate(310 40) scale(0.32)" opacity="1.0">
+  <g stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="2" stroke-linecap="round">
+  <line x1="810.0" y1="126.1" x2="872.9" y2="97.6"/>
+  <line x1="872.9" y1="97.6" x2="935.8" y2="115.4"/>
+  <line x1="935.8" y1="115.4" x2="995.0" y2="140.3"/>
+  <line x1="995.0" y1="140.3" x2="1017.2" y2="222.2"/>
+  <line x1="1017.2" y1="222.2" x2="1150.4" y2="225.8"/>
+  <line x1="1150.4" y1="225.8" x2="1180.0" y2="151.0"/>
+  <line x1="1180.0" y1="151.0" x2="995.0" y2="140.3"/>
+  </g>
+  <circle cx="810.0" cy="126.1" r="22" fill="#FFFFFF" fill-opacity="0.10">
+  </circle>
+  <circle cx="872.9" cy="97.6" r="22" fill="#FFFFFF" fill-opacity="0.10">
+  </circle>
+  <circle cx="935.8" cy="115.4" r="22" fill="#FFFFFF" fill-opacity="0.10">
+  </circle>
+  <circle cx="995.0" cy="140.3" r="22" fill="#FFFFFF" fill-opacity="0.10">
+  </circle>
+  <circle cx="1017.2" cy="222.2" r="22" fill="#FFFFFF" fill-opacity="0.10">
+  </circle>
+  <circle cx="1150.4" cy="225.8" r="22" fill="#FFFFFF" fill-opacity="0.10">
+  </circle>
+  <circle cx="1180.0" cy="151.0" r="22" fill="#FFFFFF" fill-opacity="0.10">
+  </circle>
+  <polygon points="810.0,111.1 813.6,121.1 824.3,121.5 815.9,128.0 818.8,138.2 810.0,132.3 801.2,138.2 804.1,128.0 795.7,121.5 806.4,121.1" fill="#FFFFFF">
+  </polygon>
+  <polygon points="872.9,82.6 876.5,92.6 887.2,93.0 878.8,99.5 881.7,109.7 872.9,103.8 864.1,109.7 867.0,99.5 858.6,93.0 869.3,92.6" fill="#FFFFFF">
+  </polygon>
+  <polygon points="935.8,100.4 939.4,110.4 950.1,110.8 941.7,117.3 944.6,127.5 935.8,121.6 927.0,127.5 929.9,117.3 921.5,110.8 932.2,110.4" fill="#FFFFFF">
+  </polygon>
+  <polygon points="995.0,125.3 998.6,135.3 1009.3,135.7 1000.9,142.2 1003.8,152.4 995.0,146.5 986.2,152.4 989.1,142.2 980.7,135.7 991.4,135.3" fill="#FFFFFF">
+  </polygon>
+  <polygon points="1017.2,207.2 1020.8,217.2 1031.5,217.6 1023.1,224.1 1026.0,234.3 1017.2,228.4 1008.4,234.3 1011.3,224.1 1002.9,217.6 1013.6,217.2" fill="#FFFFFF">
+  </polygon>
+  <polygon points="1150.4,210.8 1154.0,220.8 1164.7,221.2 1156.3,227.7 1159.2,237.9 1150.4,232.0 1141.6,237.9 1144.5,227.7 1136.1,221.2 1146.8,220.8" fill="#FFFFFF">
+  </polygon>
+  <polygon points="1180.0,136.0 1183.6,146.0 1194.3,146.4 1185.9,152.9 1188.8,163.1 1180.0,157.2 1171.2,163.1 1174.1,152.9 1165.7,146.4 1176.4,146.0" fill="#FFFFFF">
+  </polygon>
+  </g>
+</svg>
