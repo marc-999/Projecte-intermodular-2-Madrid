@@ -84,32 +84,18 @@
 
 ---
 
-## Semana 6
+## Semana 6 (Práctica 4: Despliegue de servicios con Windows Server, DHCP y DHCP Snooping)
 
 * **(a) Objetivo general del grupo:**
   * Elaborar el documento de planificación de la infraestructura (recursos de la máquina virtual, esquema de discos y volúmenes, esquema de red y justificación del nombre del servidor y del dominio).
   * Crear en Proxmox la máquina virtual `WS2025-ASIXXX` (UEFI, 2 vCPU, 8 GB de RAM y cuatro discos: 60 GB, 50 GB, 50 GB y 20 GB) e instalar Windows Server 2025 en modo UEFI/GPT.
-  * Configurar el almacenamiento: inicializar los discos secundarios, crear los volúmenes simples, asignar letras de unidad y etiquetarlos (D: recursos compartidos, E: datos departamentales, F: copias de seguridad).
-  * Configurar el TCP/IP del servidor (IP estática, máscara, puerta de enlace y DNS) y verificar la conectividad con `ipconfig /all` y `ping`.
+  * Configurar el almacenamiento (volúmenes D: recursos compartidos, E: datos departamentales y F: copias de seguridad) y el TCP/IP del servidor (IP estática, máscara, puerta de enlace y DNS), verificando la conectividad con `ipconfig /all` y `ping`.
+  * Instalar el rol de servidor DHCP, autorizarlo en Active Directory (si forma parte del dominio), crear y activar el ámbito con sus opciones (puerta de enlace, DNS y nombre de dominio) y asignar una IP fija por reserva DHCP a un equipo cliente físico.
+  * Desplegar un servidor DHCP fraudulento (*rogue DHCP*) en una máquina física con Ubuntu Server, con una configuración errónea controlada, y comprobar que sin protección un cliente puede recibir su oferta.
+  * Activar DHCP Snooping en el switch Cisco, con el puerto del servidor Windows como *trusted* y el resto de puertos como *untrusted*, y verificarlo con `show ip dhcp snooping` y `show ip dhcp snooping binding`.
+  * Documentar la topología (máquinas y puertos), recoger las capturas necesarias y actualizar la documentación del proyecto y el repositorio.
 * **(b) Qué hemos podido conseguir:**
   * Hemos elaborado el documento de planificación, instalado Windows Server 2025 en modo UEFI/GPT, configurado los discos secundarios (D:, E: y F:) y establecido el TCP/IP del servidor, verificando la conectividad.
-  * Hemos conseguido todos los objetivos planteados para esta sesión.
-* **(c) Qué NO hemos podido conseguir y por qué:**
-  * Nada, hemos logrado todos los objetivos marcados.
-
----
-
-## Semana 7
-
-* **(a) Objetivo general del grupo:**
-  * Instalar el rol de servidor DHCP en Windows Server 2025, completar la configuración posterior a la instalación y autorizar el servidor en Active Directory (si forma parte del dominio).
-  * Crear y activar un ámbito adecuado a la red asignada (rango, máscara, exclusiones) y configurar sus opciones (puerta de enlace, DNS y nombre de dominio).
-  * Comprobar que un cliente virtual obtiene la configuración por DHCP y asignar una IP fija mediante reserva DHCP a un equipo cliente físico.
-  * Desplegar un servidor DHCP fraudulento (*rogue DHCP*) en una máquina física con Ubuntu Server, con una configuración errónea controlada, y comprobar que sin protección un cliente puede recibir su oferta.
-  * Activar DHCP Snooping en el switch Cisco, configurar como *trusted* únicamente el puerto del servidor Windows y mantener *untrusted* el resto de puertos.
-  * Verificar con `show ip dhcp snooping` y `show ip dhcp snooping binding` que se descartan las respuestas del servidor Ubuntu y que los clientes siguen recibiendo la configuración correcta de Windows Server.
-  * Documentar la topología (máquinas y puertos) y recoger las capturas necesarias, y actualizar la documentación del proyecto y el repositorio.
-* **(b) Qué hemos podido conseguir:**
   * Hemos instalado y autorizado el rol DHCP, creado y activado el ámbito con sus opciones y asignado una IP fija por reserva al cliente físico.
   * Hemos desplegado el servidor DHCP fraudulento en Ubuntu Server y configurado DHCP Snooping en el switch Cisco, verificando que se bloquean sus respuestas y que los clientes reciben la configuración correcta de Windows Server.
   * Hemos conseguido todos los objetivos.
