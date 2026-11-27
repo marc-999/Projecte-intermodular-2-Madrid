@@ -37,7 +37,7 @@ Proyecto intermodular del grupo Madrid (2º ASIX): diseño, despliegue y documen
 
 ## <img src="assets/icons/docs.svg" width="24" height="24" alt=""> Documento general
 
-Documento completo de la Fase 1 en PDF, con las Prácticas 2, 3 y 4: esquema de red, Proxmox VE, VLAN, máquinas virtuales, Windows Server, servicio DHCP y DHCP Snooping.
+Documento completo de la Fase 1 en PDF, con las Prácticas 2, 3 y 4.
 
 <div align="center">
 
