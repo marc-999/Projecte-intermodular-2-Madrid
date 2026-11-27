@@ -451,11 +451,11 @@ C:\> ipconfig /all
 
 <p align="center"><img src="Imagenes/paso_24_ipconfig_cliente_virtual.png" alt="ipconfig /all en el cliente virtual" width="500"><br><sub><em>Figura 47. ipconfig /all en el cliente virtual</em></sub></p>
 
-Por último, al **cliente físico** se le asigna siempre la misma dirección mediante una **reserva** en el servidor DHCP, asociada a la dirección MAC de su tarjeta de red. El resultado de `ipconfig /all` muestra que el equipo recibe por DHCP la dirección reservada.
+Por último, al **cliente físico** se le asigna siempre la misma dirección mediante una **reserva** en el servidor DHCP, asociada a la dirección MAC de su tarjeta de red. El resultado de `ip a` muestra que el equipo recibe por DHCP la dirección reservada.
 
 ```
 ```
-<p align="center"><img src="Imagenes/ip_a_Cliente.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 48. ip a en el cliente virtual</em></sub></p>
+<p align="center"><img src="Imagenes/ip_a_Clientefísico.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 48. ip a en el cliente virtual</em></sub></p>
 
 ---
 
