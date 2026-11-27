@@ -84,8 +84,7 @@
 
 ---
 
-## Semana 6 (Práctica 4: Despliegue de servicios con Windows Server, DHCP y DHCP Snooping)
-
+## Semana 6
 * **(a) Objetivo general del grupo:**
   * Elaborar el documento de planificación de la infraestructura (recursos de la máquina virtual, esquema de discos y volúmenes, esquema de red y justificación del nombre del servidor y del dominio).
   * Crear en Proxmox la máquina virtual `WS2025-ASIXXX` (UEFI, 2 vCPU, 8 GB de RAM y cuatro discos: 60 GB, 50 GB, 50 GB y 20 GB) e instalar Windows Server 2025 en modo UEFI/GPT.
