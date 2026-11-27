@@ -447,7 +447,6 @@ En un **cliente virtual** configurado para obtener la IP automáticamente se eje
 
 ```
 ip a
-
 ```
 
 <p align="center"><img src="Imagenes/ip_a_Cliente.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 47. ip a en el cliente virtual</em></sub></p>
@@ -456,7 +455,6 @@ Por último, al **cliente físico** se le asigna siempre la misma dirección med
 
 ```
 ip a
-
 ```
 <p align="center"><img src="Imagenes/ip_a_Clientefísico.png" alt="ip a en el cliente virtual" width="500"><br><sub><em>Figura 48. ip a en el cliente virtual</em></sub></p>
 
